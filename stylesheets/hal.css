@@ -1,36 +1,41 @@
-body {
-  counter-reset : steps;
-}
-
 .md-header {
-    background-color: #00415a;
+    background-color: #000000;
 }
 /* obere fusszeile, mit previous und next: */
 .md-footer-nav {
-    background-color: #00415a;
+    background-color: #000000;
 }
 /* untere fusszeile, mit social-media-links: */
 .md-footer-meta {
-    background-color: #00415a;
-}
- 
-/* primaerfarben laut corporate design: 00415a (dunkelblau), 009Cd2 (blau 1) = hauptfarbe, d62341 (rot), 00d8FF (hellblau) */
-
-span.circle::before {
-  counter-increment: steps;
-  content: counter(steps);
+    background-color: #000000;
 }
 
-span.circle {
-  display: inline-block;
-  border-radius: 50%;
-  min-width: 20px;
-  min-height: 20px;
-  padding: 5px;
-  background: #00d8FF;
-  color: white;
-  text-align: center;
-  line-height: 1;
-  box-sizing: content-box;
-  white-space: nowrap;
+/* links im fließtext (mittelteil) haben ein helleres blau und sind unterstrichen (wie auch unten): */
+.md-typeset a {
+	color: #d92873;
+}
+.md-typeset a:hover {
+	color: #d92873;
+}
+
+.md-nav__link {
+    color: #d92873;
+}
+
+.md-nav__link:hover {
+    color: #d92873;
+}
+
+
+/* der aktive link im linken navigationsbereich: */
+.md-nav__link--active {
+	/*  #536dfe ist die farbe für hover-links: */
+	color: #d92873;
+	font-weight: bold;
+	
+}
+
+.md-nav__link--active:hover {
+	color: #d92873;
+	text-decoration: underline;
 }
