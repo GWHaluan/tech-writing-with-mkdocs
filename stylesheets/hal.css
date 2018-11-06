@@ -1,16 +1,16 @@
 .md-header {
     background-color: #000000;
 }
-/* obere fusszeile, mit previous und next: */
+/* obere footer area, with previous and next: */
 .md-footer-nav {
     background-color: #000000;
 }
-/* untere fusszeile, mit social-media-links: */
+/* lower footer area, with social-media-links: */
 .md-footer-meta {
     background-color: #000000;
 }
 
-/* links im fließtext (mittelteil) haben ein helleres blau und sind unterstrichen (wie auch unten): */
+/* links in pages text */
 .md-typeset a {
 	color: #d92873;
 }
@@ -27,17 +27,14 @@
 }
 
 
-/* der aktive link im linken navigationsbereich: */
+/* active link in nav: */
 .md-nav__link--active {
-	/*  #536dfe ist die farbe für hover-links: */
 	color: #d92873;
-	font-weight: bold;
-	
+	font-weight: bold;	
 }
 
 .md-nav__link--active:hover {
 	color: #d92873;
-	text-decoration: underline;
 }
 
 .md-search__input {
