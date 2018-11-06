@@ -1,0 +1,36 @@
+body {
+  counter-reset : steps;
+}
+
+.md-header {
+    background-color: #00415a;
+}
+/* obere fusszeile, mit previous und next: */
+.md-footer-nav {
+    background-color: #00415a;
+}
+/* untere fusszeile, mit social-media-links: */
+.md-footer-meta {
+    background-color: #00415a;
+}
+ 
+/* primaerfarben laut corporate design: 00415a (dunkelblau), 009Cd2 (blau 1) = hauptfarbe, d62341 (rot), 00d8FF (hellblau) */
+
+span.circle::before {
+  counter-increment: steps;
+  content: counter(steps);
+}
+
+span.circle {
+  display: inline-block;
+  border-radius: 50%;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 5px;
+  background: #00d8FF;
+  color: white;
+  text-align: center;
+  line-height: 1;
+  box-sizing: content-box;
+  white-space: nowrap;
+}
