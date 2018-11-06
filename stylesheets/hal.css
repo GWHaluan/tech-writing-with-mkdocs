@@ -39,3 +39,11 @@
 	color: #d92873;
 	text-decoration: underline;
 }
+
+.md-search__input {
+    background-color: rgba(125, 125, 125, 0.50);
+}
+
+.md-search__input:hover {
+    background-color: rgba(217, 40, 115, 0.50);
+}
