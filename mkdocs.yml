@@ -5,11 +5,13 @@ docs_dir: docs
 
 nav:
   - Home: index.md
+  - Why mkdocs?: why.md
+  - Setup and Configuration: config.md
+  - "Solved: Distributed Navigation": nav.md
+  - "Solved: Link Checking": link.md
 
 theme:
   name: 'material'
-  font:
-    text: Compasse
   logo: 'favicon.ico'
   favicon: 'favicon.ico'
 
