@@ -270,6 +270,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#toc-permalinks" title="ToC Permalinks" class="md-nav__link">
+    ToC Permalinks
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -407,6 +414,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#toc-permalinks" title="ToC Permalinks" class="md-nav__link">
+    ToC Permalinks
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -496,6 +510,12 @@ A Stack Overflow post provides some <a href="https://serverfault.com/questions/9
 </pre></div>
 
 
+<p>Activate the Material theme via your <code>mkdocs.yml</code> file:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">theme</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&#39;material&#39;</span>
+</pre></div>
+
+
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Material overrides the built-in search bar, which has been greatly improved with regard to performance in the <a href="https://www.mkdocs.org/about/release-notes/#version-10-2018-08-03">1.0.0 Milestone release</a> of mkdocs.
@@ -509,8 +529,8 @@ In very large projects, this can cause the frontend to freeze for a several seco
 </pre></div>
 
 
-<p>Set a favicon via your <code>mkdocs.yml</code> file:</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">extra</span><span class="p p-Indicator">:</span>
+<p>Set a favicon and logo via your theme in your <code>mkdocs.yml</code> file:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">theme</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&#39;material&#39;</span>
   <span class="l l-Scalar l-Scalar-Plain">logo</span><span class="p p-Indicator">:</span> <span class="s">&#39;favicon.ico&#39;</span>
   <span class="l l-Scalar l-Scalar-Plain">favicon</span><span class="p p-Indicator">:</span> <span class="s">&#39;favicon.ico&#39;</span>
@@ -518,8 +538,38 @@ In very large projects, this can cause the frontend to freeze for a several seco
 
 
 <h3 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h3>
+<p>Sadly, Markdown does not provide a syntax for comments.
+There is a somewhat dirty workaround with comments in link syntax with empty link text, for example:</p>
+<div class="codehilite"><pre><span></span>[](This comment cannot be seen because there is no link text)
+</pre></div>
+
+
+<p>You can also just use html comments:</p>
+<div class="codehilite"><pre><span></span><span class="c">&lt;!-- A comment --&gt;</span>
+</pre></div>
+
+
+<p>This comment will be visible in the page source when you convert to html though.</p>
+<p>The cleanest implementation for Markdown comments is the Markdown extension <code>mkdcomments</code>.</p>
+<p>Install it via pip:</p>
+<div class="codehilite"><pre><span></span>pip install git+https://github.com/ryneeverett/python-markdown-comments.git
+</pre></div>
+
+
+<p>Activate it via your <code>mkdocs.yml</code> file:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">markdown_extensions</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mkdcomments</span>
+</pre></div>
+
+
+<p>Now you can use html comments with a slight modification (three dashes instead of two), and they will not appear in the page source when you convert to html:</p>
+<div class="codehilite"><pre><span></span><span class="c">&lt;!--- A comment --&gt;</span>
+</pre></div>
+
+
 <h3 id="includes">Includes<a class="headerlink" href="#includes" title="Permanent link">&para;</a></h3>
 <h3 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link">&para;</a></h3>
+<h3 id="toc-permalinks">ToC Permalinks<a class="headerlink" href="#toc-permalinks" title="Permanent link">&para;</a></h3>
 <h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h2>
 <h3 id="pipeline">Pipeline<a class="headerlink" href="#pipeline" title="Permanent link">&para;</a></h3>
 <h3 id="github-pages">github pages<a class="headerlink" href="#github-pages" title="Permanent link">&para;</a></h3>
