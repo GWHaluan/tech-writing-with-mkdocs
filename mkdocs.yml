@@ -7,16 +7,20 @@ nav:
   - Home: index.md
   - Why mkdocs?: why.md
   - Setup and Configuration: config.md
+  - Workflows: workflow.md
   - "Solved: Distributed Navigation": nav.md
   - "Solved: Link Checking": link.md
+  - "Idea: Translation Post-Processing": tlpostproc.md
 
 theme:
   name: 'material'
   logo: 'favicon.ico'
   favicon: 'favicon.ico'
-
 extra_css:
     - 'stylesheets/hal.css'
+    - https://unpkg.com/mermaid@7.1.2/dist/mermaid.css
+extra_javascript:
+    - https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js
 
 markdown_extensions:
     - admonition
@@ -25,6 +29,8 @@ markdown_extensions:
     - codehilite
     - toc:
         permalink: True
-
-
-
+    - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_div_format

@@ -114,17 +114,137 @@ Now you can use html comments with a slight modification (three dashes instead o
 
 ### Includes
 
+Sadly, Markdown does not provide a syntax to include a partial or the entire content of other Markdown files.
+Luckily, there is a Markdown extension for it: [Markdon-Include](https://github.com/cmacmackin/markdown-include).
+
+Install it with:
+
+    pip install git+https://github.com/ryneeverett/python-markdown-comments.git
+
+Activate it via your `mkdocs.yml` file:
+
+``` yaml
+markdown_extensions:
+  - markdown_include.include
+```
+
+Note that the `.include` suffix is necessary.
+
+Reference other Markdown files like this:
+
+```
+!path/to/filename.md!
+```
+
+but wrapped in `{` and `}`.
+
+Note that you can set a base URL for include paths:
+
+``` yaml
+markdown_extensions:
+  - markdown_include.include:
+       base_path: docs
+```
+
+This base path will be prefixed to paths you set for includes.
+
+If there are broken links, a warning will appear on your `mkdocs build` or `mkdocs serve` console output:
+
+``` console
+WARNING -  Documentation file 'config.md' contains a link to 'deadlink.md' which is not found in the documentation files. 
+```
+
+However, you cannot configure mkdocs to fail its `build` or `serve` in case of a warning, as the use of `strict mode` would do.
+
+The [source code](https://github.com/cmacmackin/markdown-include/blob/master/markdown_include/include.py) uses a `print` statement for the warning in the `except` block of the `run` function.
+
+My recommendation for an error exit upon broken links would be to:
+
+1. clone the repository
+2. override the `except` block like so:
+
+
+        except Exception as e:
+           print('Warning: could not find file {}. Ignoring '
+               'include statement. Error: {}'.format(filename, e))
+           lines[loc] = INC_SYNTAX.sub('',line)
+           raise e
+    i.e., rather than using a `break` statement, raise the exception and cause an error.
+
+3. install markdown locally via:
+
+        pip install -e .
+    in the directory where you modified the cloned include extension.
+    You might as well host the fork, e.g. in bitbucket, and install it from there.
 
 ### Code Highlighting
 
+There is an extension for code highlighting that works beautifully with the Material theme: [codehilite](https://python-markdown.github.io/extensions/code_hilite/).
+
+Activate it via your `mkdocs.yml` file:
+
+``` yaml
+markdown_extensions:
+  - codehilite
+```
 
 ### ToC Permalinks
 
+To enable Permalinks for your page headlines, use the `toc` extension and add the following snippet to your `mkdocs.yml` file:
 
-## Deployment
+``` yaml
+markdown_extensions:
+  - toc:
+       permalink: True
+```
 
-### Pipeline
+Next to each headline, a paragraph symbol will appear upon hover, and act as an anchor URL to the section.
+When you click it, you can copy the link from your browser address bar.
 
-### github pages
+There is a problem with the `toc` extension:
+Anchor links are generated from headlines, and specifically from the headline strings.
+However, they are language-specific.
+In case you want to translate your project, translating any headlines other than first level, will break any incoming links to their sections.
+There is a workaround, refer to my idea for [translation post-processing](tlpostproc.md).
 
-## 
+## Mermaid Diagrams
+
+With [mermaid diagrams](https://mermaidjs.github.io/), you can create certain types of schematic images via a simple syntax and maintain the image source code directly within your Markdown files.
+
+mermaid is written in Javascript, and thus you can include its script and css files in your mkdocs.yml file:
+
+``` yaml
+extra_css:
+    - https://unpkg.com/mermaid@7.1.2/dist/mermaid.css
+extra_javascript:
+    - https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js
+```
+
+You can now embed a graph definition in a `div`-tag with class attribute of `mermaid` in your Markdown files like so:
+
+``` xml
+<div class="mermaid">
+graph LR
+    Start --> Stop
+</div>
+```
+
+mermaidjs will convert this to a graph like so:
+
+``` mermaid
+graph LR
+    Start --> Stop
+```
+
+In order to use the fenced code macro ```` mermaid` instead of html tags, you need to customize a Markdown extension called `pymdownx`. Add the following to your mkdocs.yml file:
+
+``` yaml
+markdown_extensions:
+    - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_div_format
+```
+
+Check out gilbsgilbs' post [here](https://github.com/squidfunk/mkdocs-material/issues/693#issuecomment-411885426).
