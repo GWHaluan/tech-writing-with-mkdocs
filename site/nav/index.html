@@ -58,8 +58,6 @@
     
       <link rel="stylesheet" href="../stylesheets/hal.css">
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@7.1.2/dist/mermaid.css">
-    
     
   </head>
   
@@ -228,9 +226,45 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Solved: Distributed Navigation
+      </label>
+    
     <a href="./" title="Solved: Distributed Navigation" class="md-nav__link md-nav__link--active">
       Solved: Distributed Navigation
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concept" title="Concept" class="md-nav__link">
+    Concept
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code" title="Code" class="md-nav__link">
+    Code
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -276,6 +310,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concept" title="Concept" class="md-nav__link">
+    Concept
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code" title="Code" class="md-nav__link">
+    Code
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -287,7 +344,113 @@
               
                 
                 
-                <h1 id="distributed-navigation">Distributed navigation<a class="headerlink" href="#distributed-navigation" title="Permanent link">&para;</a></h1>
+                <h1 id="distributed-navigation">Distributed Navigation<a class="headerlink" href="#distributed-navigation" title="Permanent link">&para;</a></h1>
+<h2 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h2>
+<p>If you have a very large project which is rather a collection of documentation projects, you might want to split up your navigation into multiple files and thus split up your mkdocs.yml file.
+However this is not an option with vanilla mkdocs.</p>
+<p>Luckily, there is a <a href="https://www.mkdocs.org/user-guide/plugins/#developing-plugins">Plugin option for mkdocs</a> for easy integration of your own code.</p>
+<p>The yml file format is simple enough to compose a new yml file from a number of sub-yml files more or less directly.
+For mkdocs, this means that you want to compose the content of the <code>nav</code>-key of your mkdocs.yml file from the <code>nav</code>s in your sub-yml files.</p>
+<p>To simplify things, i recommend keeping all the yml files you want to compile in the same directory, i.e. in the same directory where mkdocs creates the docs subdirectory:</p>
+<div class="codehilite"><pre><span></span>docs
+ |- index.md
+ |- some-other.md
+ |- subdir1
+     |- index.md
+     |- another.md
+ |- subdir2
+     |- index.md
+     |- yet-another.md
+mkdocs.yml
+ref1.yml
+ref2.yml
+</pre></div>
+
+<p>It is also handy to separate the documentation projects' Markdown files in subdirectories of <code>docs</code>.</p>
+<p>Assuming that <code>ref1.yml</code> builds a documentation project in <code>subdir1</code> and <code>ref2.yml</code> in <code>subdir2</code>, the <code>nav</code>-keys can look like this:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/index.md</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/another.md</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home Two</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/index.md</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some different title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/yet-another.md</span>
+</pre></div>
+
+<p>Reference <code>ref1.yml</code> and <code>ref2.yml</code> in your <code>mkdocs.yml</code> like so:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ref1.yml</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 2</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ref2.yml</span>
+</pre></div>
+
+<p>If you use the plugin described below, during your mkdocs build or serve this will be evaluated to:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 1</span><span class="p p-Indicator">:</span> 
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/index.md</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/another.md</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 2</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home Two</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/index.md</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some different title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/yet-another.md</span>
+</pre></div>
+
+<h2 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h2>
+<p>Define a class, and set it up as described in <a href="https://www.mkdocs.org/user-guide/plugins/#developing-plugins">plugin development for mkdocs</a>.</p>
+<p>Use the <code>on_config</code> method as an entry point, look for your <code>nav</code>-key in the mkdocs.yml file, then iterate through any entries that reference another yml file. For each reference, read that yml-file, and insert its <code>nav</code>-key into the parent file.</p>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">on_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">toc</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;nav&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">makeYML</span><span class="p">(</span><span class="n">toc</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">makeYML</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toc</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">itertoc</span><span class="p">(</span><span class="n">li</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">)):</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">li</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.md&quot;</span><span class="p">)):</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="s2">&quot;docs&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+                    <span class="c1"># value points to a file</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">p</span><span class="p">)):</span>
+                        <span class="n">tocEntry</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                            <span class="n">matchwhite</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;[^\S</span><span class="se">\n</span><span class="s1">]+&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;#([^#].*)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">matchwhite</span><span class="p">:</span>
+                                <span class="k">continue</span>
+                            <span class="k">elif</span> <span class="n">match</span><span class="p">:</span>
+                                <span class="n">tit</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                                <span class="n">tocEntry</span><span class="p">[</span><span class="n">tit</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span>
+                                <span class="k">break</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">head</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;this filename: &quot;</span> <span class="o">+</span> <span class="n">tail</span><span class="p">)</span>
+                                <span class="k">break</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">tocEntry</span> <span class="o">==</span> <span class="p">{}):</span>
+                            <span class="n">fnam</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">entry</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">tocEntry</span><span class="p">[</span><span class="n">fnam</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span>
+                        <span class="n">li</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">tocEntry</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="c1"># case value is a list</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">type</span><span class="p">([]))):</span>
+                        <span class="n">entry</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">itertoc</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># value is a string</span>
+                        <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                        <span class="c1"># value points to a file</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">p</span><span class="p">)):</span>
+                            <span class="n">ext</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                            <span class="c1"># case value points to a .yml file: load &#39;nav&#39;-value.</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">ext</span> <span class="o">==</span> <span class="n">ymlExtension</span><span class="p">):</span>
+                                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                                    <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+                                    <span class="n">subtoc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;nav&#39;</span><span class="p">]</span> 
+                                    <span class="n">entry</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">itertoc</span><span class="p">(</span><span class="n">subtoc</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">li</span>
+    <span class="n">itertoc</span><span class="p">(</span><span class="n">toc</span><span class="p">)</span>
+    <span class="k">return</span>
+</pre></div>
+
+<p>I omitted a couple of imports here, notably <code>mkdocs</code>, <code>yaml</code>, <code>sys</code>, <code>os</code> and <code>re</code>.</p>
                 
                   
                 
@@ -363,7 +526,7 @@
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
-        <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+        <script src="../scripts/mermaid.min.js"></script>
       
     
     

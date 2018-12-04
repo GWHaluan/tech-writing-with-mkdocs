@@ -12,11 +12,50 @@ The solution sketched below uses a recursive wget command during a build process
 GNU Wget is a program that retrieves web content.
 It can be utilized as a link checker because it will return a 404 if it cannot follow links when invoked recursively.
 
-Take for example this [broken link](non-existing.md#no-title) (relative Markdown link to `non-existing.md#no-title`).
+Take for example this [broken link](non-existing.md) (relative Markdown link to `non-existing.md`) and this [broken anchor-link](link.md#no-anchor) (link to this file, and the `#no-anchor` anchor which does not exist).
 
 Now, if you invoke wget like so:
 
-    wget --recursive --no-verbose --reject-regex=/[0-9\.]+/ https://gwhaluan.github.io/tech-writing-with-mkdocs/
+    wget --recursive --no-verbose --spider -e robots=off --reject-regex=/[0-9\.]+/ https://gwhaluan.github.io/tech-writing-with-mkdocs/
+
+you get the following output on your console (or at least got, at the time of this writing):
+
+``` shell
+2018-12-04 13:19:24 URL:https://gwhaluan.github.io/tech-writing-with-mkdocs/ [9609/9609] -> "gwhaluan.github.io/tech-writing-with-mkdocs/index.html.tmp.tmp" [1]
+2018-12-04 13:19:24 URL: https://gwhaluan.github.io/tech-writing-with-mkdocs/favicon.ico 200 OK
+unlink: No such file or directory
+2018-12-04 13:19:24 URL: https://gwhaluan.github.io/tech-writing-with-mkdocs/assets/stylesheets/application.451f80e5.css 200 OK
+gwhaluan.github.io/tech-writing-with-mkdocs/assets/stylesheets/application.451f80e5.css.tmp: No such file or directory
+unlink: No such file or directory
+2018-12-04 13:19:25 URL: https://gwhaluan.github.io/tech-writing-with-mkdocs/assets/javascripts/modernizr.1aa3b519.js 200 OK
+unlink: No such file or directory
+2018-12-04 13:19:25 URL: https://gwhaluan.github.io/tech-writing-with-mkdocs/assets/fonts/material-icons.css 200 OK
+gwhaluan.github.io/tech-writing-with-mkdocs/assets/fonts/material-icons.css.tmp: No such file or directory
+unlink: No such file or directory
+2018-12-04 13:19:25 URL: https://gwhaluan.github.io/tech-writing-with-mkdocs/stylesheets/hal.css 200 OK
+gwhaluan.github.io/tech-writing-with-mkdocs/stylesheets/hal.css.tmp: No such file or directory
+unlink: No such file or directory
+2018-12-04 13:19:25 URL:https://gwhaluan.github.io/tech-writing-with-mkdocs/why/ [20913/20913] -> "gwhaluan.github.io/tech-writing-with-mkdocs/why/index.html.tmp.tmp" [1]
+2018-12-04 13:19:25 URL:https://gwhaluan.github.io/tech-writing-with-mkdocs/config/ [27062/27062] -> "gwhaluan.github.io/tech-writing-with-mkdocs/config/index.html.tmp.tmp" [1]
+2018-12-04 13:19:25 URL:https://gwhaluan.github.io/tech-writing-with-mkdocs/workflow/ [12263/12263] -> "gwhaluan.github.io/tech-writing-with-mkdocs/workflow/index.html.tmp.tmp" [1]
+2018-12-04 13:19:25 URL:https://gwhaluan.github.io/tech-writing-with-mkdocs/nav/ [26665/26665] -> "gwhaluan.github.io/tech-writing-with-mkdocs/nav/index.html.tmp.tmp" [1]
+2018-12-04 13:19:26 URL:https://gwhaluan.github.io/tech-writing-with-mkdocs/link/ [11841/11841] -> "gwhaluan.github.io/tech-writing-with-mkdocs/link/index.html.tmp.tmp" [1]
+2018-12-04 13:19:26 URL:https://gwhaluan.github.io/tech-writing-with-mkdocs/tlpostproc/ [9361/9361] -> "gwhaluan.github.io/tech-writing-with-mkdocs/tlpostproc/index.html.tmp.tmp" [1]
+2018-12-04 13:19:26 URL: https://gwhaluan.github.io/tech-writing-with-mkdocs/assets/javascripts/application.583bbe55.js 200 OK
+unlink: No such file or directory
+2018-12-04 13:19:26 URL: https://gwhaluan.github.io/tech-writing-with-mkdocs/scripts/mermaid.min.js 200 OK
+unlink: No such file or directory
+https://gwhaluan.github.io/tech-writing-with-mkdocs/link/non-existing.md:
+Remote file does not exist -- broken link!!!
+Found 1 broken link.
+
+https://gwhaluan.github.io/tech-writing-with-mkdocs/link/non-existing.md
+
+FINISHED --2018-12-04 13:19:26--
+Total wall clock time: 2,5s
+Downloaded: 7 files, 115K in 0,03s (3,62 MB/s)
+
+```
 
 <!--- --domains=documentation.peakwork.lan -->
 <!--- 2>&1 | grep -B 1 'ERROR 404' && exit 1 || exit 0 -->

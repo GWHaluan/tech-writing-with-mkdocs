@@ -58,8 +58,6 @@
     
       <link rel="stylesheet" href="../stylesheets/hal.css">
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@7.1.2/dist/mermaid.css">
-    
     
   </head>
   
@@ -240,9 +238,38 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Solved: Link Checking
+      </label>
+    
     <a href="./" title="Solved: Link Checking" class="md-nav__link md-nav__link--active">
       Solved: Link Checking
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wget" title="wget" class="md-nav__link">
+    wget
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -276,6 +303,22 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wget" title="wget" class="md-nav__link">
+    wget
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -287,7 +330,19 @@
               
                 
                 
-                <h1 id="link-checking">Link checking<a class="headerlink" href="#link-checking" title="Permanent link">&para;</a></h1>
+                <h1 id="link-checking">Link Checking<a class="headerlink" href="#link-checking" title="Permanent link">&para;</a></h1>
+<p>mkdocs does not come with integrated link checking.
+In a living documentation, file names as well as section titles are going to change on a regular basis.
+Every time that happens, any links to those files or section titles inevitably break and need to be fixed.
+Thus it would be nice to have an automated process that detects these broken links so you do not have to search for them yourself.</p>
+<p>The solution sketched below uses a recursive wget command during a build process.</p>
+<h2 id="wget">wget<a class="headerlink" href="#wget" title="Permanent link">&para;</a></h2>
+<p>GNU Wget is a program that retrieves web content.
+It can be utilized as a link checker because it will return a 404 if it cannot follow links when invoked recursively.</p>
+<p>Take for example this <a href="non-existing.md#no-title">broken link</a> (relative Markdown link to <code>non-existing.md#no-title</code>).</p>
+<p>Now, if you invoke wget like so:</p>
+<div class="codehilite"><pre><span></span>wget --recursive --no-verbose --reject-regex=/[0-9\.]+/ https://gwhaluan.github.io/tech-writing-with-mkdocs/
+</pre></div>
                 
                   
                 
@@ -363,7 +418,7 @@
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
-        <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+        <script src="../scripts/mermaid.min.js"></script>
       
     
     

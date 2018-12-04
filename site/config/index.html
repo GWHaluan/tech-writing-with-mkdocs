@@ -58,8 +58,6 @@
     
       <link rel="stylesheet" href="../stylesheets/hal.css">
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@7.1.2/dist/mermaid.css">
-    
     
   </head>
   
@@ -626,21 +624,24 @@ In case you want to translate your project, translating any headlines other than
 There is a workaround, refer to my idea for <a href="../tlpostproc/">translation post-processing</a>.</p>
 <h2 id="mermaid-diagrams">Mermaid Diagrams<a class="headerlink" href="#mermaid-diagrams" title="Permanent link">&para;</a></h2>
 <p>With <a href="https://mermaidjs.github.io/">mermaid diagrams</a>, you can create certain types of schematic images via a simple syntax and maintain the image source code directly within your Markdown files.</p>
-<p>mermaid is written in Javascript, and thus you can include its script and css files in your mkdocs.yml file:</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">extra_css</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">https://unpkg.com/mermaid@7.1.2/dist/mermaid.css</span>
-<span class="l l-Scalar l-Scalar-Plain">extra_javascript</span><span class="p p-Indicator">:</span>
+<p>mermaid is written in Javascript, and thus you can include its script file in your mkdocs.yml file:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">extra_javascript</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js</span>
 </pre></div>
 
-<p>You can now embed a graph definition in a <code>div</code>-tag with class attribute of <code>mermaid</code> in your Markdown files like so:</p>
+<p>or just download the minified version and include it in your project:</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">extra_javascript</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">scripts/mermaid.min.js</span>
+</pre></div>
+
+<p>You can now embed a graph definition in a <code>div</code>-tag with class attribute <code>mermaid</code> in your Markdown files like so:</p>
 <div class="codehilite"><pre><span></span><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;mermaid&quot;</span><span class="nt">&gt;</span>
 graph LR
     Start --&gt; Stop
 <span class="nt">&lt;/div&gt;</span>
 </pre></div>
 
-<p>mermaidjs will convert this to a graph like so:</p>
+<p>mermaidjs will convert this to a graph:</p>
 <div class="mermaid">graph LR
     Start --&gt; Stop</div>
 
@@ -729,7 +730,7 @@ graph LR
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
-        <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+        <script src="../scripts/mermaid.min.js"></script>
       
     
     
