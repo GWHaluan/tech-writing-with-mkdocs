@@ -64,9 +64,29 @@ In my solution sketched out in the article about [distributed navigation](nav.md
 ### Software Variants and Versions
 
 With a comprehensive mkdocs setup, you are likely using a number of software packages that can all have different versions and that might clash with eachother.
-I cannot always recommend keeping everything up to date.
-For example, 
+I cannot recommend keeping everything up to date.
+For example, the Markdown software is incompatible with `markdown_include` since the [3.0 release of Markdown](https://libraries.io/pypi/Markdown/3.0).
+In order to keep things compatible, you need to deliberately use version 2.6.11.
 
-### Multilanguage Support
+### Multi-Language Support
+
+There is no multi-language support for mkdocs currently.
+Possible solutions and discussions about them are scarce and mostly open issues of the project (eg [issue #614](https://github.com/mkdocs/mkdocs/issues/617)).
+
+For a translation workflow you would need to either translate Markdown files and yml files or the mkdocs-generated HTML files.
+The Markdown format can be problematic.
+In order to have a clean translation, language-specific hosting could work, i.e. to have a sub-project per language that is structurally equivalent to what you have translated.
 
 ### Large Search Index in Large Projects
+
+The built-in mkdocs search is problematic to say the least.
+It uses lunr.js and parses all documentation pages into a search index.
+This index is then queried when a user enters a search term into the search bar.
+The way it was implemented up to [milestone release 1.0](https://www.mkdocs.org/about/release-notes/#version-10-2018-08-03), the search index was parsed every time the user entered a search term on a specific page.
+This means, whenever the user navigated to a different page and then used the search bar again, unnecessary index parsing occured.
+This is still the case if you use the Material theme for mkdocs, as it overrides the improved search that was released in 1.0.
+
+For a larger documentation project (we had around 1200 pages), the search index is substantially large (60mb+) to slow down parsing a lot.
+This meant that the search bar was unusable, since it blocked the GUI for several seconds upon use.
+
+If Material didn't override the search, it would be usable by now. However, I recommend not using the Javascript search at all but instead implement your own server-side search.

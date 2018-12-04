@@ -211,16 +211,21 @@ There is a workaround, refer to my idea for [translation post-processing](tlpost
 
 With [mermaid diagrams](https://mermaidjs.github.io/), you can create certain types of schematic images via a simple syntax and maintain the image source code directly within your Markdown files.
 
-mermaid is written in Javascript, and thus you can include its script and css files in your mkdocs.yml file:
+mermaid is written in Javascript, and thus you can include its script file in your mkdocs.yml file:
 
 ``` yaml
-extra_css:
-    - https://unpkg.com/mermaid@7.1.2/dist/mermaid.css
 extra_javascript:
     - https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js
 ```
 
-You can now embed a graph definition in a `div`-tag with class attribute of `mermaid` in your Markdown files like so:
+or just download the minified version and include it in your project:
+
+``` yaml
+extra_javascript:
+    - scripts/mermaid.min.js
+```
+
+You can now embed a graph definition in a `div`-tag with class attribute `mermaid` in your Markdown files like so:
 
 ``` xml
 <div class="mermaid">
@@ -229,7 +234,7 @@ graph LR
 </div>
 ```
 
-mermaidjs will convert this to a graph like so:
+mermaidjs will convert this to a graph:
 
 ``` mermaid
 graph LR
