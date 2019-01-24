@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
     
     
       
@@ -40,12 +40,12 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.572ca0f0.css">
       
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
     
     
       
@@ -55,6 +55,7 @@
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
     
       <link rel="stylesheet" href="../stylesheets/hal.css">
     
@@ -73,7 +74,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#why-mkdocs" tabindex="1" class="md-skip">
+      <a href="#why-mkdocs" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -361,6 +362,30 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../html/redoc/events-api.html" title="Redoc Example" class="md-nav__link">
+      Redoc Example
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../html/spectacle/events-api.html" title="Spectacle Example" class="md-nav__link">
+      Spectacle Example
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -480,7 +505,7 @@
               
                 
                 
-                <h1 id="why-mkdocs">Why mkdocs?<a class="headerlink" href="#why-mkdocs" title="Permanent link">&para;</a></h1>
+                <h1 id="why-mkdocs">Why mkdocs?</h1>
 <p>There are many ways to organize your Technical Writing.
 What it comes down to, is your specific use case.
 When i started my last job, the situation was this:</p>
@@ -500,45 +525,45 @@ Our reasons were:</p>
 <li>Pipeline and deployment tools were already in use in the development teams</li>
 <li>Markdown is simple and therefore easily customizable and portable</li>
 </ul>
-<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
-<h3 id="plain-text-source">Plain Text Source<a class="headerlink" href="#plain-text-source" title="Permanent link">&para;</a></h3>
+<h2 id="features">Features</h2>
+<h3 id="plain-text-source">Plain Text Source</h3>
 <p>Markdown is an easy to pick up simple markup language and thus in plain text format.
 Writing texts in plain text format is an advantage because you store and maintain information on how it is displayed separately.</p>
-<h3 id="theming-and-styling-via-mkdocs">Theming and Styling via mkdocs<a class="headerlink" href="#theming-and-styling-via-mkdocs" title="Permanent link">&para;</a></h3>
+<h3 id="theming-and-styling-via-mkdocs">Theming and Styling via mkdocs</h3>
 <p>mkdocs has a number of more or less well-designed themes.
 You can alter them to your liking.
 Please refer to my recommended <a href="../config/">mkdocs setup</a> for more information.</p>
-<h3 id="easy-collaboration">Easy Collaboration<a class="headerlink" href="#easy-collaboration" title="Permanent link">&para;</a></h3>
+<h3 id="easy-collaboration">Easy Collaboration</h3>
 <p>Due to its plain text nature, you can easily work with a version-control software such as git.
 Collaboration and reviewing are quite easy that way, and comparable to the maintenance of software code.
 Checkout <a href="http://www.writethedocs.org/guide/docs-as-code/">docs as code</a>.</p>
-<h2 id="problems">Problems<a class="headerlink" href="#problems" title="Permanent link">&para;</a></h2>
-<h3 id="static-explicit-navigation">Static Explicit Navigation<a class="headerlink" href="#static-explicit-navigation" title="Permanent link">&para;</a></h3>
+<h2 id="problems">Problems</h2>
+<h3 id="static-explicit-navigation">Static Explicit Navigation</h3>
 <p>Your mkdocs navigation is maintained in the <code>mkdocs.yml</code> file.
 For complete control, you need to reference every Markdown file that you want to be part of your documentation.
 You can have Markdown infer the navigation title from the <code>h1</code> headline of a Markdown file, or override it in your <code>mkdocs.yml</code> file:</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">index.md</span>
+<div class="highlight"><pre><span></span><span class="nt">nav</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">index.md</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">config.md</span>
 </pre></div>
 
 <p>In this example, the navigation entry <em>Home</em> is explicit in the <code>mkdocs.yml</code> file, while the navigation entry for the configuration article is inferred from the <code>h1</code> headline in the file <code>config.md</code>.
 There are some problems with such inferences and the state of nested navigation siblings, see <a href="https://github.com/mkdocs/mkdocs/issues/1347">mkdocs issue #1347</a>.</p>
 <p>In my solution sketched out in the article about <a href="../nav/">distributed navigation</a>, there is a built-in solution for this problem as well.</p>
-<h3 id="encoding">Encoding<a class="headerlink" href="#encoding" title="Permanent link">&para;</a></h3>
+<h3 id="encoding">Encoding</h3>
 <p><em>TODO</em></p>
-<h3 id="software-variants-and-versions">Software Variants and Versions<a class="headerlink" href="#software-variants-and-versions" title="Permanent link">&para;</a></h3>
+<h3 id="software-variants-and-versions">Software Variants and Versions</h3>
 <p>With a comprehensive mkdocs setup, you are likely using a number of software packages that can all have different versions and that might clash with eachother.
 I cannot recommend keeping everything up to date.
 For example, the Markdown software is incompatible with <code>markdown_include</code> since the <a href="https://libraries.io/pypi/Markdown/3.0">3.0 release of Markdown</a>.
 In order to keep things compatible, you need to deliberately use version 2.6.11.</p>
-<h3 id="multi-language-support">Multi-Language Support<a class="headerlink" href="#multi-language-support" title="Permanent link">&para;</a></h3>
+<h3 id="multi-language-support">Multi-Language Support</h3>
 <p>There is no multi-language support for mkdocs currently.
 Possible solutions and discussions about them are scarce and mostly open issues of the project (eg <a href="https://github.com/mkdocs/mkdocs/issues/617">issue #614</a>).</p>
 <p>For a translation workflow you would need to either translate Markdown files and yml files or the mkdocs-generated HTML files.
 The Markdown format can be problematic.
 In order to have a clean translation, language-specific hosting could work, i.e. to have a sub-project per language that is structurally equivalent to what you have translated.</p>
-<h3 id="large-search-index-in-large-projects">Large Search Index in Large Projects<a class="headerlink" href="#large-search-index-in-large-projects" title="Permanent link">&para;</a></h3>
+<h3 id="large-search-index-in-large-projects">Large Search Index in Large Projects</h3>
 <p>The built-in mkdocs search is problematic to say the least.
 It uses lunr.js and parses all documentation pages into a search index.
 This index is then queried when a user enters a search term into the search bar.
@@ -619,7 +644,7 @@ This meant that the search bar was unusable, since it blocked the GUI for severa
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.b41f3d20.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

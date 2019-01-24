@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
     
     
       
@@ -40,12 +40,12 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.572ca0f0.css">
       
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
     
     
       
@@ -55,6 +55,7 @@
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
     
       <link rel="stylesheet" href="../stylesheets/hal.css">
     
@@ -73,7 +74,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#distributed-navigation" tabindex="1" class="md-skip">
+      <a href="#distributed-navigation" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -293,6 +294,30 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../html/redoc/events-api.html" title="Redoc Example" class="md-nav__link">
+      Redoc Example
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../html/spectacle/events-api.html" title="Spectacle Example" class="md-nav__link">
+      Spectacle Example
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -344,15 +369,15 @@
               
                 
                 
-                <h1 id="distributed-navigation">Distributed Navigation<a class="headerlink" href="#distributed-navigation" title="Permanent link">&para;</a></h1>
-<h2 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h2>
+                <h1 id="distributed-navigation">Distributed Navigation</h1>
+<h2 id="concept">Concept</h2>
 <p>If you have a very large project which is rather a collection of documentation projects, you might want to split up your navigation into multiple files and thus split up your mkdocs.yml file.
 However this is not an option with vanilla mkdocs.</p>
 <p>Luckily, there is a <a href="https://www.mkdocs.org/user-guide/plugins/#developing-plugins">Plugin option for mkdocs</a> for easy integration of your own code.</p>
 <p>The yml file format is simple enough to compose a new yml file from a number of sub-yml files more or less directly.
 For mkdocs, this means that you want to compose the content of the <code>nav</code>-key of your mkdocs.yml file from the <code>nav</code>s in your sub-yml files.</p>
 <p>To simplify things, i recommend keeping all the yml files you want to compile in the same directory, i.e. in the same directory where mkdocs creates the docs subdirectory:</p>
-<div class="codehilite"><pre><span></span>docs
+<div class="highlight"><pre><span></span>docs
  |- index.md
  |- some-other.md
  |- subdir1
@@ -368,36 +393,36 @@ ref2.yml
 
 <p>It is also handy to separate the documentation projects' Markdown files in subdirectories of <code>docs</code>.</p>
 <p>Assuming that <code>ref1.yml</code> builds a documentation project in <code>subdir1</code> and <code>ref2.yml</code> in <code>subdir2</code>, the <code>nav</code>-keys can look like this:</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/index.md</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/another.md</span>
+<div class="highlight"><pre><span></span><span class="nt">nav</span><span class="p">:</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/index.md</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Some title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/another.md</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home Two</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/index.md</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some different title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/yet-another.md</span>
+<div class="highlight"><pre><span></span><span class="nt">nav</span><span class="p">:</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Home Two</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/index.md</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Some different title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/yet-another.md</span>
 </pre></div>
 
 <p>Reference <code>ref1.yml</code> and <code>ref2.yml</code> in your <code>mkdocs.yml</code> like so:</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ref1.yml</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 2</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ref2.yml</span>
+<div class="highlight"><pre><span></span><span class="nt">nav</span><span class="p">:</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Space 1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ref1.yml</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Space 2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ref2.yml</span>
 </pre></div>
 
 <p>If you use the plugin described below, during your mkdocs build or serve this will be evaluated to:</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nav</span><span class="p p-Indicator">:</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 1</span><span class="p p-Indicator">:</span> 
-     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/index.md</span>
-     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/another.md</span>
- <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Space 2</span><span class="p p-Indicator">:</span>
-     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Home Two</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/index.md</span>
-     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Some different title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/yet-another.md</span>
+<div class="highlight"><pre><span></span><span class="nt">nav</span><span class="p">:</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Space 1</span><span class="p">:</span> 
+     <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/index.md</span>
+     <span class="p p-Indicator">-</span> <span class="nt">Some title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir1/another.md</span>
+ <span class="p p-Indicator">-</span> <span class="nt">Space 2</span><span class="p">:</span>
+     <span class="p p-Indicator">-</span> <span class="nt">Home Two</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/index.md</span>
+     <span class="p p-Indicator">-</span> <span class="nt">Some different title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdir2/yet-another.md</span>
 </pre></div>
 
-<h2 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h2>
+<h2 id="code">Code</h2>
 <p>Define a class, and set it up as described in <a href="https://www.mkdocs.org/user-guide/plugins/#developing-plugins">plugin development for mkdocs</a>.</p>
 <p>Use the <code>on_config</code> method as an entry point, look for your <code>nav</code>-key in the mkdocs.yml file, then iterate through any entries that reference another yml file. For each reference, read that yml-file, and insert its <code>nav</code>-key into the parent file.</p>
-<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">on_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">toc</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;nav&#39;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">makeYML</span><span class="p">(</span><span class="n">toc</span><span class="p">)</span>
 
@@ -522,7 +547,7 @@ ref2.yml
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.b41f3d20.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
