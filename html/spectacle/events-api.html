@@ -1,0 +1,807 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events API | API Reference</title>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css" />
+    <link rel="stylesheet" href="stylesheets/spectacle.min.css" />
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- <script src="javascripts/foundation.js"></script> -->
+    <script src="javascripts/spectacle.min.js"></script>
+  </head>
+  <body id="spectacle">
+    <div id="page" class="drawer-layout drawer-slide-right-large">
+      <div id="sidebar">
+        <button class="close-button" aria-label="Close menu" type="button" data-drawer-close>
+          <span aria-hidden="true">×</span>
+        </button>
+        <nav id="nav" role="navigation">
+          <h5>Topics</h5>
+          <a href="#introduction">Introduction</a>
+          <a href="#authentication">Authentication</a>
+          <h5>Paths</h5>
+          <!-- <section>
+                <a href="#path--events">/events</a>
+                <ul> -->
+          <!-- <li> -->
+          <a href="#operation--events-post"> Create new event </a>
+          <!-- </li> -->
+          <!-- </ul>
+              </section> -->
+          <!-- <section>
+                <a href="#path--events--eventRef-">/events/{eventRef}</a>
+                <ul> -->
+          <!-- <li> -->
+          <a href="#operation--events--eventRef--get"> Get event </a>
+          <!-- </li> -->
+          <!-- </ul>
+              </section> -->
+          <h5>Schema Definitions</h5>
+          <a href="#definition-eventBody"> eventBody </a>
+          <a href="#definition-eventPostResponse"> eventPostResponse </a>
+          <a href="#definition-eventPostValidationErrorResponse"> eventPostValidationErrorResponse </a>
+          <a href="#definition-UnauthorizedError"> UnauthorizedError </a>
+        </nav>
+      </div>
+      <div id="docs" class="row collapse expanded drawer" data-drawer>
+        <button class="floating-menu-icon" type="button" data-drawer-slide="right">
+          <span class="hamburger"></span>
+        </button>
+        <div class="example-box doc-content"></div>
+        <article>
+          <h1 class="doc-title">Events API
+            <span>API Reference</span>
+          </h1>
+          <div id="introduction" data-traverse-target="introduction">
+            <div class="doc-row">
+              <div class="doc-copy">
+                <p>This is the events API that allows internal services to create and read events using access_token</p>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>API Endpoint</h5>
+                  <!-- <div class="hljs"> --><pre><code>https://api.etrusted.com</code></pre>
+                  <!-- </div> -->
+                  <h5>Schemes:
+                    <span>https</span>
+                  </h5>
+                  <h5>Version:
+                    <span>0.1-draft</span>
+                  </h5>
+                </section>
+              </div>
+            </div>
+          </div>
+          <!-- <h1 id="security" data-traverse-target="security">Security</h1> -->
+          <h1 id="authentication" data-traverse-target="authentication">Authentication</h1>
+          <div id="security-definition-apiKey" class="panel">
+            <div class="doc-row">
+              <div class="doc-copy">
+                <h3 class="security-definition-title">
+                  <span class="security-name">apiKey</span>
+                  <span class="swagger-security-definition-apiKey"></span>
+                </h3>
+                <section class="swagger-security-definition-properties">
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">type</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> apiKey </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">name</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> Authorization </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">in</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> header </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1>Paths</h1>
+          <span id="path--events"></span>
+          <div id="operation--events-post" class="operation panel" data-traverse-target="operation--events-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Events">Events</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Create new event</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/events</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>This API creates new events</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/eventBody">eventBody</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>undefined</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;checkout&quot;</span>,
+  <span class="hljs-attr">&quot;customer&quot;</span>: {
+    <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;John&quot;</span>,
+    <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Doe&quot;</span>,
+    <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;user@example.com&quot;</span>,
+    <span class="hljs-attr">&quot;mobile&quot;</span>: <span class="hljs-string">&quot;+4916286029830&quot;</span>,
+    <span class="hljs-attr">&quot;address&quot;</span>: <span class="hljs-string">&quot;MusterStr. 17, 47110&quot;</span>,
+    <span class="hljs-attr">&quot;preferredCommunicationChannel&quot;</span>: <span class="hljs-string">&quot;EMAIL&quot;</span>
+  },
+  <span class="hljs-attr">&quot;channel&quot;</span>: {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;my_unique_identifier&quot;</span>,
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;user_defined&quot;</span>
+  },
+  <span class="hljs-attr">&quot;transaction&quot;</span>: {
+    <span class="hljs-attr">&quot;reference&quot;</span>: <span class="hljs-string">&quot;ORDER-121416990&quot;</span>,
+    <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2017-01-01T13:30:15.000Z&quot;</span>
+  },
+  <span class="hljs-attr">&quot;system&quot;</span>: <span class="hljs-string">&quot;customer_system_name&quot;</span>,
+  <span class="hljs-attr">&quot;systemVersion&quot;</span>: <span class="hljs-string">&quot;1.0&quot;</span>,
+  <span class="hljs-attr">&quot;metadata&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">202 Accepted</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/eventPostResponse">eventPostResponse</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>202 response</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/eventPostValidationErrorResponse">eventPostValidationErrorResponse</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>400 Bad Request</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">401 Unauthorized</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/UnauthorizedError">UnauthorizedError</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(202 Accepted)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Message&quot;</span>: <span class="hljs-string">&quot;Your event (evt-69d47558-b4e2-11e8-b04a-5153bcba3215) was accepted for processing&quot;</span>,
+  <span class="hljs-attr">&quot;EventRef&quot;</span>: <span class="hljs-string">&quot;evt-69d47558-b4e2-11e8-b04a-5153bcba3215&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(400 Bad Request)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Message&quot;</span>: <span class="hljs-string">&quot;Invalid request: instance requires property &apos;type&apos;&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(401 Unauthorized)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Message&quot;</span>: <span class="hljs-string">&quot;Forbidden&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-security">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="swagger-request-security-schema"></th>
+                        <th class="swagger-request-security-scopes"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a href="#security-definition-apiKey">apiKey</a>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </div>
+          <span id="path--events--eventRef-"></span>
+          <div id="operation--events--eventRef--get" class="operation panel" data-traverse-target="operation--events--eventRef--get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Events">Events</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Get event</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/events/{eventRef}</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>This API retrieves events by id</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">eventRef:
+                        <span class="prop-type">
+                          <span class="json-property-type">string</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in path </div>
+                    </div>
+                    <div class="prop-value">
+                      <p class="no-description">(no description)</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/eventBody">eventBody</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>OK</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">401 Unauthorized</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/UnauthorizedError">UnauthorizedError</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Event Not Found</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;checkout&quot;</span>,
+  <span class="hljs-attr">&quot;customer&quot;</span>: {
+    <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;John&quot;</span>,
+    <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Doe&quot;</span>,
+    <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;user@example.com&quot;</span>,
+    <span class="hljs-attr">&quot;mobile&quot;</span>: <span class="hljs-string">&quot;+4916286029830&quot;</span>,
+    <span class="hljs-attr">&quot;address&quot;</span>: <span class="hljs-string">&quot;MusterStr. 17, 47110&quot;</span>,
+    <span class="hljs-attr">&quot;preferredCommunicationChannel&quot;</span>: <span class="hljs-string">&quot;EMAIL&quot;</span>
+  },
+  <span class="hljs-attr">&quot;channel&quot;</span>: {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;my_unique_identifier&quot;</span>,
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;user_defined&quot;</span>
+  },
+  <span class="hljs-attr">&quot;transaction&quot;</span>: {
+    <span class="hljs-attr">&quot;reference&quot;</span>: <span class="hljs-string">&quot;ORDER-121416990&quot;</span>,
+    <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2017-01-01T13:30:15.000Z&quot;</span>
+  },
+  <span class="hljs-attr">&quot;system&quot;</span>: <span class="hljs-string">&quot;customer_system_name&quot;</span>,
+  <span class="hljs-attr">&quot;systemVersion&quot;</span>: <span class="hljs-string">&quot;1.0&quot;</span>,
+  <span class="hljs-attr">&quot;metadata&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(401 Unauthorized)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Message&quot;</span>: <span class="hljs-string">&quot;Forbidden&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-security">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="swagger-request-security-schema"></th>
+                        <th class="swagger-request-security-scopes"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a href="#security-definition-apiKey">apiKey</a>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1>Schema Definitions</h1>
+          <div id="definition-eventBody" class="definition panel" data-traverse-target="definition-eventBody">
+            <h2 class="panel-title">
+              <a name="/definitions/eventBody"></a>eventBody: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>The request parameters for generating a transactional questionnaire link</p>
+                </section>
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="type" class="has-description">
+                      <span class="json-property-name">type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The event type associated with this link.</p>
+                    </dd>
+                    <dt data-property-name="customer" class="has-description">
+                      <span class="json-property-name">customer:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The customer to be invited to leave a review.</p>
+                    </dd>
+                    <dt class="json-inner-schema">
+                      <section class="json-schema-properties">
+                        <dl>
+                          <dt data-property-name="firstName" class="has-description">
+                            <span class="json-property-name">firstName:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>The customer&#39;s first name.</p>
+                          </dd>
+                          <dt data-property-name="lastName" class="has-description">
+                            <span class="json-property-name">lastName:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>The customer&#39;s last name.</p>
+                          </dd>
+                          <dt data-property-name="email" class="has-description">
+                            <span class="json-property-name">email:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>The customer&#39;s email address.</p>
+                          </dd>
+                          <dt data-property-name="mobile" class="has-description">
+                            <span class="json-property-name">mobile:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>The customer&#39;s mobile phone number.</p>
+                          </dd>
+                          <dt data-property-name="address" class="has-description">
+                            <span class="json-property-name">address:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>The customer&#39;s address.</p>
+                          </dd>
+                          <dt data-property-name="preferredCommunicationChannel" class="has-description">
+                            <span class="json-property-name">preferredCommunicationChannel:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-enum" title="Possible values">
+                              <span class="json-property-enum-item json-property-enum-default-value">EMAIL</span>,
+                              <span class="json-property-enum-item">SMS</span>
+                            </span>
+                            <span class="json-property-range" title="Value limits"></span>
+                            <span class="json-property-default-value" title="Default value">EMAIL</span>
+                          </dt>
+                          <dd>
+                            <p>What communication channel is preferred by a customer</p>
+                          </dd>
+                        </dl>
+                      </section>
+                    </dt>
+                    <dt data-property-name="channel" class="has-description">
+                      <span class="json-property-name">channel:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The channel which will be associated with the review.</p>
+                    </dd>
+                    <dt class="json-inner-schema">
+                      <section class="json-schema-properties">
+                        <dl>
+                          <dt data-property-name="id" class="has-description">
+                            <span class="json-property-name">id:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                            <span class="json-property-required"></span>
+                          </dt>
+                          <dd>
+                            <p>The unique identifier of the channel.</p>
+                          </dd>
+                          <dt data-property-name="type" class="has-description">
+                            <span class="json-property-name">type:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-enum" title="Possible values">
+                              <span class="json-property-enum-item">user_defined</span>,
+                              <span class="json-property-enum-item json-property-enum-default-value">etrusted</span>
+                            </span>
+                            <span class="json-property-range" title="Value limits"></span>
+                            <span class="json-property-default-value" title="Default value">etrusted</span>
+                          </dt>
+                          <dd>
+                            <p>The type of the id used to refer to the channel.</p>
+                          </dd>
+                        </dl>
+                      </section>
+                    </dt>
+                    <dt data-property-name="transaction" class="has-description">
+                      <span class="json-property-name">transaction:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The transaction to be reviewed.</p>
+                    </dd>
+                    <dt class="json-inner-schema">
+                      <section class="json-schema-properties">
+                        <dl>
+                          <dt data-property-name="reference" class="has-description">
+                            <span class="json-property-name">reference:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                            <span class="json-property-required"></span>
+                          </dt>
+                          <dd>
+                            <p>An external reference to the transaction.</p>
+                          </dd>
+                          <dt data-property-name="date" class="has-description">
+                            <span class="json-property-name">date:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-format">(date-time)</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>The date when the transaction occurred.</p>
+                          </dd>
+                        </dl>
+                      </section>
+                    </dt>
+                    <dt data-property-name="system" class="has-description">
+                      <span class="json-property-name">system:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The system name is the technical system name, in which this link will be imbedded. If problem occur, eTrusted will communicate this system name to the integrator for further analysis. Therefore the integrator should use precise names to differentiate his technical systems.</p>
+                    </dd>
+                    <dt data-property-name="systemVersion" class="has-description">
+                      <span class="json-property-name">systemVersion:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The system version is the version of the integrator system. This offers organizations the possibility to use different versions of the same integration without putting this information into the system name.</p>
+                    </dd>
+                    <dt data-property-name="metadata" class="has-description">
+                      <span class="json-property-name">metadata:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The metadata associated with the review.</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;checkout&quot;</span>,
+  <span class="hljs-attr">&quot;customer&quot;</span>: {
+    <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;John&quot;</span>,
+    <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Doe&quot;</span>,
+    <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;user@example.com&quot;</span>,
+    <span class="hljs-attr">&quot;mobile&quot;</span>: <span class="hljs-string">&quot;+4916286029830&quot;</span>,
+    <span class="hljs-attr">&quot;address&quot;</span>: <span class="hljs-string">&quot;MusterStr. 17, 47110&quot;</span>,
+    <span class="hljs-attr">&quot;preferredCommunicationChannel&quot;</span>: <span class="hljs-string">&quot;EMAIL&quot;</span>
+  },
+  <span class="hljs-attr">&quot;channel&quot;</span>: {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;my_unique_identifier&quot;</span>,
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;user_defined&quot;</span>
+  },
+  <span class="hljs-attr">&quot;transaction&quot;</span>: {
+    <span class="hljs-attr">&quot;reference&quot;</span>: <span class="hljs-string">&quot;ORDER-121416990&quot;</span>,
+    <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2017-01-01T13:30:15.000Z&quot;</span>
+  },
+  <span class="hljs-attr">&quot;system&quot;</span>: <span class="hljs-string">&quot;customer_system_name&quot;</span>,
+  <span class="hljs-attr">&quot;systemVersion&quot;</span>: <span class="hljs-string">&quot;1.0&quot;</span>,
+  <span class="hljs-attr">&quot;metadata&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-eventPostResponse" class="definition panel" data-traverse-target="definition-eventPostResponse">
+            <h2 class="panel-title">
+              <a name="/definitions/eventPostResponse"></a>eventPostResponse: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="Message" class="has-description">
+                      <span class="json-property-name">Message:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Response Message. Contains either success or error messages</p>
+                    </dd>
+                    <dt data-property-name="EventRef" class="has-description">
+                      <span class="json-property-name">EventRef:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Event Reference</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Message&quot;</span>: <span class="hljs-string">&quot;Your event (evt-69d47558-b4e2-11e8-b04a-5153bcba3215) was accepted for processing&quot;</span>,
+  <span class="hljs-attr">&quot;EventRef&quot;</span>: <span class="hljs-string">&quot;evt-69d47558-b4e2-11e8-b04a-5153bcba3215&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-eventPostValidationErrorResponse" class="definition panel" data-traverse-target="definition-eventPostValidationErrorResponse">
+            <h2 class="panel-title">
+              <a name="/definitions/eventPostValidationErrorResponse"></a>eventPostValidationErrorResponse: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="Message" class="has-description">
+                      <span class="json-property-name">Message:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Error message details</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Message&quot;</span>: <span class="hljs-string">&quot;Invalid request: instance requires property &apos;type&apos;&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-UnauthorizedError" class="definition panel" data-traverse-target="definition-UnauthorizedError">
+            <h2 class="panel-title">
+              <a name="/definitions/UnauthorizedError"></a>UnauthorizedError:
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>Forbidden</p>
+                </section>
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="Message" class="has-description">
+                      <span class="json-property-name">Message:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Error message details</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Message&quot;</span>: <span class="hljs-string">&quot;Forbidden&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row no-margin">
+            <div class="doc-copy doc-separator">
+              <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
+                <span>Spectacle</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
