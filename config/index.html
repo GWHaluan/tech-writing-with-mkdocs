@@ -479,23 +479,27 @@
               
                 
                 
-                <h1 id="setup-and-configuration">Setup and Configuration</h1>
-<h2 id="git">git</h2>
+                <h1 id="setup-and-configuration">Setup and Configuration<a class="headerlink" href="#setup-and-configuration" title="Permanent link">&para;</a></h1>
+<h2 id="git">git<a class="headerlink" href="#git" title="Permanent link">&para;</a></h2>
 <p><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Install git</a>.</p>
-<h2 id="mkdocs">mkdocs</h2>
+<h2 id="mkdocs">mkdocs<a class="headerlink" href="#mkdocs" title="Permanent link">&para;</a></h2>
 <p>Install <a href="https://www.mkdocs.org/">mkdocs</a>.</p>
 <p>mkdocs is written in Python. First, <a href="https://www.python.org/downloads/">install Python</a>, then download <a href="https://bootstrap.pypa.io/get-pip.py"><code>get-pip</code></a>.</p>
 <p>Execute the following command in the directory with <code>get-pip</code>:</p>
-<pre><code>python get-pip.py
-</code></pre>
+<div class="codehilite"><pre><span></span>python get-pip.py
+</pre></div>
+
+
 <p>Afterwards, install mkdocs via pip:</p>
-<pre><code>pip install mkdocs
-</code></pre>
+<div class="codehilite"><pre><span></span>pip install mkdocs
+</pre></div>
+
+
 <p>In Ubuntu Linux, you need to take extra steps to install the latest versions of python and pip.
 See <a href="https://tecadmin.net/install-python-3-7-on-ubuntu-linuxmint/">this tutorial</a> for an installation of Python 3.7.
 A Stack Overflow post provides some <a href="https://serverfault.com/questions/918335/best-way-to-run-python-3-7-on-ubuntu-16-04-which-comes-with-python-3-5">additional tricks</a>.</p>
 <p>It is best to keep a <code>3.7</code>-suffix for pip, so the references are unambiguous:</p>
-<div class="highlight"><pre><span></span><span class="gp">user@machine:~/Desktop$</span> python --version
+<div class="codehilite"><pre><span></span><span class="gp">user@machine:~/Desktop$</span> python --version
 <span class="go">Python 2.7.15rc1</span>
 <span class="gp">user@machine:~/Desktop$</span> python3.7 --version
 <span class="go">Python 3.7.0</span>
@@ -506,83 +510,93 @@ A Stack Overflow post provides some <a href="https://serverfault.com/questions/9
 </pre></div>
 
 <p>In this case, pip is only installed in Python 3.7.</p>
-<h3 id="theme">Theme</h3>
+<h3 id="theme">Theme<a class="headerlink" href="#theme" title="Permanent link">&para;</a></h3>
 <p>There are a couple of <a href="https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes">themes</a> for mkdocs.</p>
 <p>I prefer <a href="https://github.com/squidfunk/mkdocs-material">Material</a>, as it offers the most polished look and feel.</p>
 <p>Install it via pip:</p>
-<pre><code>pip install mkdocs-material
-</code></pre>
+<div class="codehilite"><pre><span></span>pip install mkdocs-material
+</pre></div>
+
+
 <p>Activate the Material theme via your <code>mkdocs.yml</code> file:</p>
-<div class="highlight"><pre><span></span><span class="nt">theme</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">theme</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;material&#39;</span>
 </pre></div>
 
-<p>!!! note
-    Material overrides the built-in search bar, which has been greatly improved with regard to performance in the <a href="https://www.mkdocs.org/about/release-notes/#version-10-2018-08-03">1.0.0 Milestone release</a> of mkdocs.
-    In very large projects, this can cause the frontend to freeze for a several seconds which is unacceptable UX. <!--- Link zu Search Index Problem Abschnitt --> </p>
-<h3 id="styling">Styling</h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Material overrides the built-in search bar, which has been greatly improved with regard to performance in the <a href="https://www.mkdocs.org/about/release-notes/#version-10-2018-08-03">1.0.0 Milestone release</a> of mkdocs.
+In very large projects, this can cause the frontend to freeze for a several seconds which is unacceptable UX. <!--- Link zu Search Index Problem Abschnitt --> </p>
+</div>
+<h3 id="styling">Styling<a class="headerlink" href="#styling" title="Permanent link">&para;</a></h3>
 <p>While your <a href="#theme">theme</a> dictates a general look and feel, you can style your documentation page in a number of ways.</p>
 <p>Include css files via your <code>mkdocs.yml</code> file:</p>
-<div class="highlight"><pre><span></span><span class="nt">extra_css</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">extra_css</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="s">&#39;stylesheets/css.css&#39;</span>
 </pre></div>
 
 <p>Set a favicon and logo via your theme in your <code>mkdocs.yml</code> file:</p>
-<div class="highlight"><pre><span></span><span class="nt">theme</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">theme</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;material&#39;</span>
   <span class="nt">logo</span><span class="p">:</span> <span class="s">&#39;favicon.ico&#39;</span>
   <span class="nt">favicon</span><span class="p">:</span> <span class="s">&#39;favicon.ico&#39;</span>
 </pre></div>
 
-<h3 id="comments">Comments</h3>
+<h3 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h3>
 <p>Sadly, Markdown does not provide a syntax for comments.
 There is a somewhat dirty workaround with comments in link syntax with empty link text, for example:</p>
-<pre><code>[](This comment cannot be seen because there is no link text)
-</code></pre>
+<div class="codehilite"><pre><span></span>[](This comment cannot be seen because there is no link text)
+</pre></div>
+
+
 <p>You can also just use html comments:</p>
-<div class="highlight"><pre><span></span><span class="c">&lt;!-- A comment --&gt;</span>
+<div class="codehilite"><pre><span></span><span class="c">&lt;!-- A comment --&gt;</span>
 </pre></div>
 
 <p>This comment will be visible in the page source when you convert to html though.</p>
 <p>The cleanest implementation for Markdown comments is the Markdown extension <code>mkdcomments</code>.</p>
 <p>Install it via pip:</p>
-<pre><code>pip install git+https://github.com/ryneeverett/python-markdown-comments.git
-</code></pre>
+<div class="codehilite"><pre><span></span>pip install git+https://github.com/ryneeverett/python-markdown-comments.git
+</pre></div>
+
+
 <p>Activate it via your <code>mkdocs.yml</code> file:</p>
-<div class="highlight"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mkdcomments</span>
 </pre></div>
 
 <p>Now you can use html comments with a slight modification (three dashes instead of two), and they will not appear in the page source when you convert to html:</p>
-<div class="highlight"><pre><span></span><span class="c">&lt;!--- A comment --&gt;</span>
+<div class="codehilite"><pre><span></span><span class="c">&lt;!--- A comment --&gt;</span>
 </pre></div>
 
-<h3 id="includes">Includes</h3>
+<h3 id="includes">Includes<a class="headerlink" href="#includes" title="Permanent link">&para;</a></h3>
 <p>Sadly, Markdown does not provide a syntax to include a partial or the entire content of other Markdown files.
 Luckily, there is a Markdown extension for it: <a href="https://github.com/cmacmackin/markdown-include">Markdon-Include</a>.</p>
 <p>Install it with:</p>
-<pre><code>pip install git+https://github.com/ryneeverett/python-markdown-comments.git
-</code></pre>
+<div class="codehilite"><pre><span></span>pip install git+https://github.com/ryneeverett/python-markdown-comments.git
+</pre></div>
+
+
 <p>Activate it via your <code>mkdocs.yml</code> file:</p>
-<div class="highlight"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">markdown_include.include</span>
 </pre></div>
 
 <p>Note that the <code>.include</code> suffix is necessary.</p>
 <p>Reference other Markdown files like this:</p>
-<div class="highlight"><pre><span></span>!path/to/filename.md!
+<div class="codehilite"><pre><span></span><span class="sx">!path/to/filename.md!</span>
 </pre></div>
 
 <p>but wrapped in <code>{</code> and <code>}</code>.</p>
 <p>Note that you can set a base URL for include paths:</p>
-<div class="highlight"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">markdown_include.include</span><span class="p">:</span>
        <span class="nt">base_path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docs</span>
 </pre></div>
 
 <p>This base path will be prefixed to paths you set for includes.</p>
 <p>If there are broken links, a warning will appear on your <code>mkdocs build</code> or <code>mkdocs serve</code> console output:</p>
-<div class="highlight"><pre><span></span><span class="go">WARNING -  Documentation file &#39;config.md&#39; contains a link to &#39;deadlink.md&#39; which is not found in the documentation files. </span>
+<div class="codehilite"><pre><span></span><span class="go">WARNING -  Documentation file &#39;config.md&#39; contains a link to &#39;deadlink.md&#39; which is not found in the documentation files. </span>
 </pre></div>
 
 <p>However, you cannot configure mkdocs to fail its <code>build</code> or <code>serve</code> in case of a warning, as the use of <code>strict mode</code> would do.</p>
@@ -592,32 +606,36 @@ Luckily, there is a Markdown extension for it: <a href="https://github.com/cmacm
 <li>clone the repository</li>
 <li>
 <p>override the <code>except</code> block like so:</p>
-<pre><code>except Exception as e:
-   print('Warning: could not find file {}. Ignoring '
-       'include statement. Error: {}'.format(filename, e))
-   lines[loc] = INC_SYNTAX.sub('',line)
+<div class="codehilite"><pre><span></span>except Exception as e:
+   print(&#39;Warning: could not find file {}. Ignoring &#39;
+       &#39;include statement. Error: {}&#39;.format(filename, e))
+   lines[loc] = INC_SYNTAX.sub(&#39;&#39;,line)
    raise e
-</code></pre>
+</pre></div>
+
+
 <p>i.e., rather than using a <code>break</code> statement, raise the exception and cause an error.</p>
 </li>
 <li>
 <p>install markdown locally via:</p>
-<pre><code>pip install -e .
-</code></pre>
+<div class="codehilite"><pre><span></span>pip install -e .
+</pre></div>
+
+
 <p>in the directory where you modified the cloned include extension.
 You might as well host the fork, e.g. in bitbucket, and install it from there.</p>
 </li>
 </ol>
-<h3 id="code-highlighting">Code Highlighting</h3>
+<h3 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link">&para;</a></h3>
 <p>There is an extension for code highlighting that works beautifully with the Material theme: <a href="https://python-markdown.github.io/extensions/code_hilite/">codehilite</a>.</p>
 <p>Activate it via your <code>mkdocs.yml</code> file:</p>
-<div class="highlight"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">codehilite</span>
 </pre></div>
 
-<h3 id="toc-permalinks">ToC Permalinks</h3>
+<h3 id="toc-permalinks">ToC Permalinks<a class="headerlink" href="#toc-permalinks" title="Permanent link">&para;</a></h3>
 <p>To enable Permalinks for your page headlines, use the <code>toc</code> extension and add the following snippet to your <code>mkdocs.yml</code> file:</p>
-<div class="highlight"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">toc</span><span class="p">:</span>
        <span class="nt">permalink</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
@@ -629,20 +647,20 @@ Anchor links are generated from headlines, and specifically from the headline st
 However, they are language-specific.
 In case you want to translate your project, translating any headlines other than first level, will break any incoming links to their sections.
 There is a workaround, refer to my idea for <a href="../tlpostproc/">translation post-processing</a>.</p>
-<h2 id="mermaid-diagrams">Mermaid Diagrams</h2>
+<h2 id="mermaid-diagrams">Mermaid Diagrams<a class="headerlink" href="#mermaid-diagrams" title="Permanent link">&para;</a></h2>
 <p>With <a href="https://mermaidjs.github.io/">mermaid diagrams</a>, you can create certain types of schematic images via a simple syntax and maintain the image source code directly within your Markdown files.</p>
 <p>mermaid is written in Javascript, and thus you can include its script file in your mkdocs.yml file:</p>
-<div class="highlight"><pre><span></span><span class="nt">extra_javascript</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">extra_javascript</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js</span>
 </pre></div>
 
 <p>or just download the minified version and include it in your project:</p>
-<div class="highlight"><pre><span></span><span class="nt">extra_javascript</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">extra_javascript</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">scripts/mermaid.min.js</span>
 </pre></div>
 
 <p>You can now embed a graph definition in a <code>div</code>-tag with class attribute <code>mermaid</code> in your Markdown files like so:</p>
-<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;mermaid&quot;</span><span class="nt">&gt;</span>
+<div class="codehilite"><pre><span></span><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;mermaid&quot;</span><span class="nt">&gt;</span>
 graph LR
     Start --&gt; Stop
 <span class="nt">&lt;/div&gt;</span>
@@ -653,7 +671,7 @@ graph LR
     Start --&gt; Stop</div>
 
 <p>In order to use the fenced code macro <code>``` mermaid</code> instead of html tags, you need to customize a Markdown extension called <code>pymdownx</code>. Add the following to your mkdocs.yml file:</p>
-<div class="highlight"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="nt">pymdownx.superfences</span><span class="p">:</span>
         <span class="nt">custom_fences</span><span class="p">:</span>
           <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mermaid</span>
