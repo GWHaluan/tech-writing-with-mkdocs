@@ -24,7 +24,12 @@ extra_javascript:
     - scripts/mermaid.min.js
 
 markdown_extensions:
-    
+    - admonition
+    - mkdcomments
+    - markdown_include.include
+    - codehilite
+    - toc:
+        permalink: True
     - pymdownx.superfences:
         custom_fences:
           - name: mermaid
