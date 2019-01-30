@@ -25,8 +25,8 @@ extra_javascript:
 
 markdown_extensions:
     - admonition
-    - mkdcomments
-    - markdown_include.include
+#    - mkdcomments
+#    - markdown_include.include
     - codehilite
     - toc:
         permalink: True
