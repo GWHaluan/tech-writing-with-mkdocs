@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>eTrusted Test Page</title>
+    <!-- needed for adaptive design -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+
+    <!--
+    ReDoc doesn't change outer page styles
+    -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!--<div style="width: 100%; height: 80px;background: #ccc;
+  position: -webkit-sticky;overflow:hidden;
+  position: sticky;
+  top: 0px;"><h1>Some header with lots of navigation options and other stuff</h1></div>
+      <div style="float: left; width: 200px; height: 800px;"><p>some text lorem ipsum</p></div>-->
+    <div id="redoc"><redoc/></div>
+    <script src="./redoc.standalone.js"> </script>
+    <script>
+        Redoc.init('https://gwhaluan.github.io/tech-writing-with-mkdocs/html/redoc/swagger_spec_merge.yml', {
+            theme: {
+                  colors: {
+                    tonalOffset: 0.3,
+                    primary: {
+                      main: '#0DBEDC',
+                    },
+                    success: {
+                      main: '#00aa13',
+                    },
+                    warning: {
+                      main: '#d4ad03',
+                      contrastText: '#ffffff',
+                    },
+                    error: {
+                      main: '#e53935',
+                    },
+                    text: {
+                      primary: '#333333',
+                    },
+                    border: {
+                      dark: 'rgba(0,0,0, 0.1)',
+                      light: '#ffffff',
+                    },
+                    responses: {
+                      success: {
+                      },
+                      error: {
+                      },
+                      redirect: {
+                        color: '#ffa500',
+                      },
+                      info: {
+                        color: '#87ceeb',
+                      },
+                    },
+                    http: {
+                      get: '#FFDC0F',
+                      post: '#FFDC0F',
+                      put: '#FFDC0F',
+                      options: '#FFDC0F',
+                      patch: '#FFDC0F',
+                      delete: '#FFDC0F',
+                      basic: '#FFDC0F',
+                      link: '#FFDC0F',
+                      head: '#FFDC0F',
+                    },
+                  },
+                  menu: {
+                    width: '260px',
+                    backgroundColor: '#fafafa',
+                    textColor: '#333333',
+                    groupItems: {
+                      textTransform: 'uppercase',
+                    },
+                    level1Items: {
+                      textTransform: 'none',
+                    },
+                    arrow: {
+                      size: '1.5em',
+                      color: theme => theme.menu.textColor,
+                    },
+                  },
+                  logo: {
+                    maxHeight: "260px",
+                    maxWidth: "260px",
+                  }
+            }
+        }, document.getElementById('redoc'))
+    </script>
+  </body>
+</html>
