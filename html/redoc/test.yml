@@ -1,0 +1,1567 @@
+swagger: '2.0'
+info:
+  title: eTrusted Reviews API
+  version: 1.0.0
+  description: >
+    [Home](http://www.trustedshops.com/) |
+    [Imprint](https://www.trustedshops.eu/legal-notice-privacy.html) | [Help
+    Centre](http://www.trustedshops.com/)
+
+
+    # Introduction
+
+
+    *eTrusted Reviews* is a SaaS (Software as a Service) feedback platform
+    operated by *eTrusted* that lets organisations collect, manage, analyse and
+    display transactional customer feedback. *eTrusted Reviews* helps
+    organisations to maximise customer feedback in quality and quantity.
+
+
+    With *eTrusted Reviews*, organisations can send out event-triggered review
+    invites to their customers to ask them for relevant feedback on services and
+    products at the right time in the proper context.
+  x-logo:
+    url: >-
+      https://cdn-assets-cloud.frontify.com/local/frontify/h_lNxVXLqrDqb2kyrixW3lMmUl7n-aBRzJUzyvzD7_8V50i_9aMpRL54pzZaPLi5Xs2CTNYbJ4nlvLOASdKdZGptMcjDno9EpSa8Iqn_dlwcVKc50LQncMwgSRlMS626?width=2400
+    altText: eTrusted logo
+host: api.etrusted.com
+schemes:
+  - https
+tags:
+  - name: Events
+    description: >
+      With *eTrusted Reviews*, organisations can send out event-triggered review
+      invites to their customers to ask them for relevant feedback on services
+      and products at the right time in the proper context.
+
+      Events can be triggered by any kind of transaction that has taken place
+      and is the basis for the invite.
+
+      External systems such as CMS, shop software, ticket systems etc. can
+      trigger an event via the *eTrusted Reviews Events API*.
+
+      Organisations can use any number of event types to express different kinds
+      of events, e.g. checkout, delivery, client contact, client support and
+      send the events to the *eTrusted Reviews Platform*.
+
+      Within the *eTrusted Reviews Platform*, organisations can then configure a
+      questionnaire for each event type and the time it will be sent to
+      customers.
+
+      *eTrusted* needs some basic information about the event.
+
+      However, the event can also carry additional information (context
+      information).
+
+      This can be very useful if an organisation wants to put the customer
+      feedback in the context of the underlying transaction and the organisation
+      can use it for its own reporting or analysis purposes.
+
+
+      There are several options to trigger an invite email with *eTrusted
+      Reviews*. The recommended and most common way is the *Events API*.
+
+
+      Only one event at a time can be sent via the *Events API*. For a complex
+      operation, organisations need to implement a loop.
+  - name: Get Reviews
+    description: >
+      Customer reviews are stored in the *eTrusted Review Platform*.
+      Organisations can retrieve them to import them into their third-party
+      systems for purposes of data analytics etc. One way to get reviews from
+      the *eTrusted Review Platform* is using an API call to the *eTrusted
+      Reviews* *Get Reviews API*.
+
+
+      Each request retrieves a list of review objects with respect to a channel
+      ID. A channel can be a shop, a store, a branch, a country etc.
+
+
+      By adding parameters to the request, developers can filter the result
+      list:
+
+
+      * specify the maximum number of reviews they want to retrieve with this
+      request
+
+      * retrieve reviews with a certain rating
+
+      * retrieve reviews submitted within a certain time frame
+
+
+      The response object contains information relevant for paginating reviews
+      in a user interface, as well as the list of reviews itself.
+
+      Note that a single request against the *Get Reviews API* usually returns
+      reviews that are displayed on a single page or view in a UI.
+
+      When a user interacts with pagination in a UI, the app can call the *Get
+      Reviews API*.
+
+      It will provide the data for displaying the next page or lazily loaded
+      list segment.
+
+
+      Review objects contain information about:
+
+
+      * the corresponding account and channel
+
+      * timestamps for submission, creation and update
+
+      * the review type
+
+      * optionally the customer, a questionnaire, a transaction and an event
+
+      * optionally survey data and meta data
+  - name: Questionnaire Link
+    description: >
+      The *Transactional Questionnaire Link API* retrieves links preconfigured
+      questionnaires for specific customers.
+
+      The questionnaires can then be embedded in an email, SMS or other channels
+      (e.g. messengers, etc.) to collect customer feedback.
+
+      *Transactional* means that the questionnaire can carry additional context
+      information.
+
+      This way, the customer feedback is put in the context of the underlying
+      transaction.
+
+
+      *eTrusted Reviews* questionnaires are based on questionnaire templates.
+
+      A questionnaire template is a collection of questions asked in a specific
+      order.
+
+      A number of different question types (i.e. star rating, multiple choices,
+      NPS, etc.) is available.
+
+      Organisations may create different questionnaire templates to ask
+      appropriate questions to their customers in the context of a specific
+      transaction.
+
+
+      Based on this questionnaire template, an individual questionnaire is
+      rendered for each customer and event.
+
+      Each questionnaire link points to a specific rendered questionnaire.
+
+      The link will expire after a set amount of time.
+
+
+      The questionnaire link parameters used to determine the corresponding
+      questionnaire use *JavaScript Object Signing and Encryption* (JOSE)
+      standard JSON Web Signature (JWS) to ensure integrity, authenticity, and
+      non-repudiation.
+
+      The questionnaire link has additional properties which also allow iframe
+      embedding into other sites.
+paths:
+  /events:
+    post:
+      summary: Create a new event
+      tags:
+        - Events
+      security:
+        - OAUTH2: []
+      description: This API endpoint creates a new event per call.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            description: The body of an event POST request.
+            type: object
+            required:
+              - type
+              - customer
+              - channel
+              - transaction
+              - system
+              - systemVersion
+            properties:
+              type:
+                type: string
+                description: >-
+                  The type parameter defines the transactional event type. This
+                  parameter is useful to connect a feedback with a specific
+                  transaction type (e.g. sales, aftersales, checkout, etc.).
+                example: checkout
+              customer:
+                type: object
+                description: >-
+                  The customer object includes all data of the customer who is
+                  invited to leave a review.
+                required:
+                  - email
+                properties:
+                  firstName:
+                    type: string
+                    description: >-
+                      First name of the customer who is invited to leave a
+                      review (e.g. `John`).
+                    example: John
+                  lastName:
+                    type: string
+                    description: >-
+                      Last name of the customer who is invited to leave a review
+                      (e.g. `Doe`).
+                    example: Doe
+                  email:
+                    type: string
+                    description: >-
+                      Email address of the customer who is invited to leave a
+                      review (e.g. `john.doe@example.com`). This must be a valid
+                      email address.
+                    example: john.doe@example.com
+                  mobile:
+                    type: string
+                    description: >-
+                      Mobile telephone number of the customer who is invited to
+                      leave a review. The mobile number must have international
+                      format including `+` and country code. (e.g.
+                      `+49123456789`).
+                    example: '+49123456789'
+                  address:
+                    type: string
+                    description: >-
+                      Address of the customer who is invited to leave a review
+                      (e.g. `Anystreet 17, Anycity, Anystate 12345`).
+                    example: 'Anystr. 17, 12345'
+              channel:
+                type: object
+                description: >-
+                  A company can interact with their customers through different
+                  channels (e.g. online, offline, app, etc.). Those channels can
+                  be mapped in *eTrusted Reviews* under the account. The channel
+                  object contains the information about the channel associated
+                  with the review.
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: >-
+                      The property `id` is the unique identifier of the channel
+                      associated with the review. Organisations can choose to
+                      use the *eTrusted Reviews* ID of the channel or an ID of
+                      any external system (e.g. `CH-123456`).
+                    example: example_unique_identifier
+                  type:
+                    type: string
+                    description: >
+                      `etrusted`: if the organisation chooses to use the
+                      eTrusted Reviews ID.
+
+                      `user_defined`: if the organisation chooses to use an ID
+                      of an external system.
+                    example: user_defined
+                    default: etrusted
+                    enum:
+                      - user_defined
+                      - etrusted
+              transaction:
+                type: object
+                description: >-
+                  The transaction object defines the transaction for which the
+                  customer shall write a review.
+                required:
+                  - reference
+                properties:
+                  reference:
+                    type: string
+                    description: >-
+                      The reference property can contain any reference used by
+                      organisations to identify the transaction. This string
+                      must be unique (the order or invoice number, e.g.
+                      `order-12345`).
+                    example: order-12345
+                  date:
+                    type: string
+                    format: date-time
+                    example: '2017-01-01T13:30:15.000Z'
+                    description: >-
+                      The date reference specifies the date at which the event
+                      to be reviewed took place. It is a timestamp in the ISO
+                      8601 and RFC3339 compliant format
+                      `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+              products:
+                type: array
+                description: >-
+                  The products parameter is an array of objects. It is the
+                  container for the products which are associated with the
+                  event. It includes all data needed for product reviews for
+                  each product.
+                items:
+                  type: object
+                  description: The object contains all information about one product.
+                  required:
+                    - name
+                    - sku
+                    - url
+                  properties:
+                    name:
+                      type: string
+                      description: >-
+                        The object product contains all information about one
+                        product which is associated with the event (e.g.
+                        `Specialbrand T-Shirt White M`).
+                      example: Specialbrand T-Shirt White M
+                    sku:
+                      type: string
+                      description: >-
+                        The Stock Keeping Unit is a specific article number of
+                        the product. It is an identifier for the product and
+                        must be unique (e.g. `1234-TS-WH-M`).
+                      example: 1234-TS-WH-M
+                    imageUrl:
+                      type: string
+                      description: >-
+                        The link to the product image of the product. In
+                        *eTrusted* technology the link is used to show a picture
+                        of the product to the customer who wants to write a
+                        review. This makes it easier for customers to remember
+                        the purchase and recognize to which product the product
+                        review invite refers to (e.g.
+                        `www.specialbrandshop.com/article123-TS-WH-M/image.jpg`).
+                      example: >-
+                        https://www.specialbrandshop.com/article123-TS-WH-M/image.jpg
+                    url:
+                      type: string
+                      description: >-
+                        The link to the product detail page. In *eTrusted*
+                        technology, the link is used to offer a link to the
+                        webpage of the product (e.g.
+                        `http://www.specialbrandshop.com/article123-TS-WH-M/`).
+                      example: 'https://www.specialbrandshop.com/article123-TS-WH-M/'
+                    brand:
+                      type: string
+                      description: >-
+                        The brand of the product (e.g. `specialbrand`). A
+                        product can only have one brand. If organisations want
+                        to use google integration and do not have a GTIN, the
+                        brand can be used in combination with the mpn.
+                      example: specialbrand
+                    categories:
+                      type: array
+                      description: >-
+                        Each product belongs to at least one certain category
+                        e.g. “fashion” or “TVs” but it can also have multiple
+                        categories e.g. `[fashion, 101, sale of the week]`
+                      items:
+                        type: string
+                      example:
+                        - fashion
+                        - '101'
+                        - sale of the week
+                    gtin:
+                      type: string
+                      description: >-
+                        A unique string that identifies the product globally,
+                        like an EAN, ISBN, GTIN, etc. A product can only have a
+                        GTIN in the EU. There are equivalent identifiers for the
+                        US etc. If organisations want to use Google integration,
+                        this field is mandatory if the product has a GTIN. E.g.
+                        `[1234567890123, 12121212]`
+                      example: '1234567890123'
+                    mpn:
+                      type: string
+                      description: >-
+                        The Product Manufacturer Number is an identification
+                        number serving as a substitute for the GTIN. If
+                        organisations want to use Google integration and do not
+                        have a GTIN, the MPN can be used in combination with the
+                        brand.
+                      example: '23687778'
+                    parentProduct:
+                      type: object
+                      description: >-
+                        If the product has multiple variants, this is the
+                        product on the highest level. The parentProduct is used
+                        to group a number of variants to one product.
+                      required:
+                        - sku
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          description: >-
+                            If the product has multiple variants, this is the
+                            name of the product on the highest level . E.g.
+                            `Specialbrand T-Shirt`
+                          example: Specialbrand T-Shirt
+                        sku:
+                          type: string
+                          description: >-
+                            If the product has multiple variants, this is the
+                            sku of the product on the highest level. This is
+                            needed for example if organisations have different
+                            variants of products but want to display products on
+                            the parent level. The sku must be unique. E.g.
+                            `1234-TS`
+                          example: 1234-TS
+              system:
+                description: >-
+                  The system parameter defines the system that issues the Events
+                  API call (e.g. "salesforce", "sap", etc.). This is useful to
+                  identify the source system that used the Events API.
+                type: string
+                example: customer_system_name
+              systemVersion:
+                description: >-
+                  The system version parameter defines the version of the source
+                  system. This offers organisations the possibility to to use
+                  different versions of the same integration without putting
+                  this information into the system name (e.g. `1.0`).
+                type: string
+                example: '1.0'
+              metadata:
+                type: object
+                description: >
+                  This object can be used to add information (apart from that
+                  contained in the *eTrusted Reviews* standard) about the
+                  customer, event or anything else, e.g. for analysis purposes.
+                example:
+                  metaKey1: metaValue1
+                  metaKey2: metaValue2
+      responses:
+        '202':
+          schema:
+            type: object
+            properties:
+              Message:
+                type: string
+                description: >-
+                  Response message. E.g. `Your event
+                  (evt-69d47558-b4e2-11e8-b04a-5153bcba3215) was accepted for
+                  processing`.
+                example: >-
+                  Your event (evt-69d47558-b4e2-11e8-b04a-5153bcba3215) was
+                  accepted for processing
+              EventRef:
+                type: string
+                description: >-
+                  Event Reference. E.g
+                  `evt-69d47558-b4e2-11e8-b04a-5153bcba3215`.
+                example: evt-69d47558-b4e2-11e8-b04a-5153bcba3215
+        '400':
+          schema:
+            type: object
+            properties:
+              Message:
+                type: string
+                description: >-
+                  The error message details. In case of a missing required
+                  property, the message looks like this: `Invalid request:
+                  instance requires property 'type'`
+                example: 'Invalid request: instance requires property ''type'''
+        '401':
+          schema:
+            properties:
+              Message:
+                type: string
+                description: >-
+                  The error message details. If the request was not authorised,
+                  access is forbidden: `Access to this resource is forbidden`
+                example: Access to this resource is forbidden
+        '500':
+          schema:
+            properties:
+              Message:
+                type: string
+                description: >-
+                  The error message details. E.g. `The server encountered an
+                  unexpected condition which prevented it from fulfilling the
+                  request`
+                example: >-
+                  The server encountered an unexpected condition which prevented
+                  it from fulfilling the request
+        '503':
+          schema:
+            properties:
+              Message:
+                type: string
+                description: >-
+                  The error message details. In case the server is down, it says
+                  `This service is temporarily unavailable`
+                example: This service is temporarily unavailable
+  '/events/{eventRef}':
+    get:
+      summary: Get an event
+      tags:
+        - Events
+      security:
+        - OAUTH2: []
+      description: >-
+        This API endpoint retrieves an event by its ID. Use this e.g. for
+        testing purposes to check if your events has been created correctly
+        after a POST request.
+      produces:
+        - application/json
+      parameters:
+        - name: eventRef
+          in: path
+          required: true
+          type: string
+          description: >-
+            This is the event reference. Event references are part of the
+            response when you create an event via POST request.
+      responses:
+        '200':
+          schema:
+            description: The body of an event POST request.
+            type: object
+            required:
+              - type
+              - customer
+              - channel
+              - transaction
+              - system
+              - systemVersion
+            properties:
+              type:
+                type: string
+                description: >-
+                  The type parameter defines the transactional event type. This
+                  parameter is useful to connect a feedback with a specific
+                  transaction type (e.g. sales, aftersales, checkout, etc.).
+                example: checkout
+              customer:
+                type: object
+                description: >-
+                  The customer object includes all data of the customer who is
+                  invited to leave a review.
+                required:
+                  - email
+                properties:
+                  firstName:
+                    type: string
+                    description: >-
+                      First name of the customer who is invited to leave a
+                      review (e.g. `John`).
+                    example: John
+                  lastName:
+                    type: string
+                    description: >-
+                      Last name of the customer who is invited to leave a review
+                      (e.g. `Doe`).
+                    example: Doe
+                  email:
+                    type: string
+                    description: >-
+                      Email address of the customer who is invited to leave a
+                      review (e.g. `john.doe@example.com`). This must be a valid
+                      email address.
+                    example: john.doe@example.com
+                  mobile:
+                    type: string
+                    description: >-
+                      Mobile telephone number of the customer who is invited to
+                      leave a review. The mobile number must have international
+                      format including `+` and country code. (e.g.
+                      `+49123456789`).
+                    example: '+49123456789'
+                  address:
+                    type: string
+                    description: >-
+                      Address of the customer who is invited to leave a review
+                      (e.g. `Anystreet 17, Anycity, Anystate 12345`).
+                    example: 'Anystr. 17, 12345'
+              channel:
+                type: object
+                description: >-
+                  A company can interact with their customers through different
+                  channels (e.g. online, offline, app, etc.). Those channels can
+                  be mapped in *eTrusted Reviews* under the account. The channel
+                  object contains the information about the channel associated
+                  with the review.
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: >-
+                      The property `id` is the unique identifier of the channel
+                      associated with the review. Organisations can choose to
+                      use the *eTrusted Reviews* ID of the channel or an ID of
+                      any external system (e.g. `CH-123456`).
+                    example: example_unique_identifier
+                  type:
+                    type: string
+                    description: >
+                      `etrusted`: if the organisation chooses to use the
+                      eTrusted Reviews ID.
+
+                      `user_defined`: if the organisation chooses to use an ID
+                      of an external system.
+                    example: user_defined
+                    default: etrusted
+                    enum:
+                      - user_defined
+                      - etrusted
+              transaction:
+                type: object
+                description: >-
+                  The transaction object defines the transaction for which the
+                  customer shall write a review.
+                required:
+                  - reference
+                properties:
+                  reference:
+                    type: string
+                    description: >-
+                      The reference property can contain any reference used by
+                      organisations to identify the transaction. This string
+                      must be unique (the order or invoice number, e.g.
+                      `order-12345`).
+                    example: order-12345
+                  date:
+                    type: string
+                    format: date-time
+                    example: '2017-01-01T13:30:15.000Z'
+                    description: >-
+                      The date reference specifies the date at which the event
+                      to be reviewed took place. It is a timestamp in the ISO
+                      8601 and RFC3339 compliant format
+                      `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+              products:
+                type: array
+                description: >-
+                  The products parameter is an array of objects. It is the
+                  container for the products which are associated with the
+                  event. It includes all data needed for product reviews for
+                  each product.
+                items:
+                  type: object
+                  description: The object contains all information about one product.
+                  required:
+                    - name
+                    - sku
+                    - url
+                  properties:
+                    name:
+                      type: string
+                      description: >-
+                        The object product contains all information about one
+                        product which is associated with the event (e.g.
+                        `Specialbrand T-Shirt White M`).
+                      example: Specialbrand T-Shirt White M
+                    sku:
+                      type: string
+                      description: >-
+                        The Stock Keeping Unit is a specific article number of
+                        the product. It is an identifier for the product and
+                        must be unique (e.g. `1234-TS-WH-M`).
+                      example: 1234-TS-WH-M
+                    imageUrl:
+                      type: string
+                      description: >-
+                        The link to the product image of the product. In
+                        *eTrusted* technology the link is used to show a picture
+                        of the product to the customer who wants to write a
+                        review. This makes it easier for customers to remember
+                        the purchase and recognize to which product the product
+                        review invite refers to (e.g.
+                        `www.specialbrandshop.com/article123-TS-WH-M/image.jpg`).
+                      example: >-
+                        https://www.specialbrandshop.com/article123-TS-WH-M/image.jpg
+                    url:
+                      type: string
+                      description: >-
+                        The link to the product detail page. In *eTrusted*
+                        technology, the link is used to offer a link to the
+                        webpage of the product (e.g.
+                        `http://www.specialbrandshop.com/article123-TS-WH-M/`).
+                      example: 'https://www.specialbrandshop.com/article123-TS-WH-M/'
+                    brand:
+                      type: string
+                      description: >-
+                        The brand of the product (e.g. `specialbrand`). A
+                        product can only have one brand. If organisations want
+                        to use google integration and do not have a GTIN, the
+                        brand can be used in combination with the mpn.
+                      example: specialbrand
+                    categories:
+                      type: array
+                      description: >-
+                        Each product belongs to at least one certain category
+                        e.g. “fashion” or “TVs” but it can also have multiple
+                        categories e.g. `[fashion, 101, sale of the week]`
+                      items:
+                        type: string
+                      example:
+                        - fashion
+                        - '101'
+                        - sale of the week
+                    gtin:
+                      type: string
+                      description: >-
+                        A unique string that identifies the product globally,
+                        like an EAN, ISBN, GTIN, etc. A product can only have a
+                        GTIN in the EU. There are equivalent identifiers for the
+                        US etc. If organisations want to use Google integration,
+                        this field is mandatory if the product has a GTIN. E.g.
+                        `[1234567890123, 12121212]`
+                      example: '1234567890123'
+                    mpn:
+                      type: string
+                      description: >-
+                        The Product Manufacturer Number is an identification
+                        number serving as a substitute for the GTIN. If
+                        organisations want to use Google integration and do not
+                        have a GTIN, the MPN can be used in combination with the
+                        brand.
+                      example: '23687778'
+                    parentProduct:
+                      type: object
+                      description: >-
+                        If the product has multiple variants, this is the
+                        product on the highest level. The parentProduct is used
+                        to group a number of variants to one product.
+                      required:
+                        - sku
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          description: >-
+                            If the product has multiple variants, this is the
+                            name of the product on the highest level . E.g.
+                            `Specialbrand T-Shirt`
+                          example: Specialbrand T-Shirt
+                        sku:
+                          type: string
+                          description: >-
+                            If the product has multiple variants, this is the
+                            sku of the product on the highest level. This is
+                            needed for example if organisations have different
+                            variants of products but want to display products on
+                            the parent level. The sku must be unique. E.g.
+                            `1234-TS`
+                          example: 1234-TS
+              system:
+                description: >-
+                  The system parameter defines the system that issues the Events
+                  API call (e.g. "salesforce", "sap", etc.). This is useful to
+                  identify the source system that used the Events API.
+                type: string
+                example: customer_system_name
+              systemVersion:
+                description: >-
+                  The system version parameter defines the version of the source
+                  system. This offers organisations the possibility to to use
+                  different versions of the same integration without putting
+                  this information into the system name (e.g. `1.0`).
+                type: string
+                example: '1.0'
+              metadata:
+                type: object
+                description: >
+                  This object can be used to add information (apart from that
+                  contained in the *eTrusted Reviews* standard) about the
+                  customer, event or anything else, e.g. for analysis purposes.
+                example:
+                  metaKey1: metaValue1
+                  metaKey2: metaValue2
+        '401':
+          schema:
+            properties:
+              Message:
+                type: string
+                description: >-
+                  The error message details. If the request was not authorised,
+                  access is forbidden: `Access to this resource is forbidden`
+                example: Access to this resource is forbidden
+        '404': {}
+  '/channels/{channelId}/customer-reviews':
+    get:
+      summary: Get a list of reviews
+      tags:
+        - Get Reviews
+      security:
+        - OAUTH2: []
+      description: >
+        This endpoint allows clients to retrieve reviews by channel ID.
+
+        The result set can be modified using a set of filters.
+
+
+        The path must contain the `channelId` of the channel for which
+        developers want to retrieve a list of reviews.
+
+
+        Query parameters can be added to the request, separated by `&`.
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: channelId
+          required: true
+          type: string
+          description: The ID of the channel for which a list of reviews will be returned.
+          example: example_unique_identifier
+        - in: query
+          name: after
+          type: string
+          required: false
+          description: >
+            `after` is a review ID. The list of reviews in the response will
+            only contain reviews submitted earlier than the review with this ID.
+          example: '1234567890123'
+        - in: query
+          name: before
+          type: string
+          required: false
+          description: >
+            `before` is a review ID. The list of reviews in the response will
+            only contain reviews submitted later than the review with this ID.
+          example: '1234567890123'
+        - in: query
+          name: submittedAfter
+          type: string
+          required: false
+          description: >
+            `submittedAfter` is a timestamp in the ISO 8601 and RFC3339
+            compliant format `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+
+            The list of reviews will only contain reviews submitted with a later
+            timestamp.
+          example: '2018-02-01T17:10:42.733Z'
+        - in: query
+          name: submittedBefore
+          type: string
+          required: false
+          description: >
+            `submittedBefore` is a timestamp in the ISO 8601 and RFC3339
+            compliant format `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+
+            The list of reviews will only contain reviews submitted with an
+            earlier timestamp.
+          example: '2018-02-01T17:10:42.733Z'
+        - in: query
+          name: count
+          type: integer
+          required: false
+          default: 50
+          description: The desired number of reviews to be retrieved.
+        - in: query
+          name: rating
+          description: >-
+            A comma-separated list of star ratings to be retrieved. If not set,
+            all reviews are listed.
+          required: false
+          example: '[1, 2, 5]'
+          type: array
+          minItems: 1
+          maxItems: 5
+          uniqueItems: true
+          items:
+            type: integer
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+      responses:
+        '200':
+          schema:
+            description: The list of retrieved reviews.
+            type: object
+            required:
+              - totalElements
+              - paging
+              - items
+            properties:
+              totalElements:
+                type: integer
+                description: >-
+                  The total number of reviews stored in the eTrusted Reviews
+                  Platform for this channel that also fulfill the filter
+                  criteria in the corresponding request.
+                example: 95
+              paging:
+                type: object
+                description: >-
+                  The paging object holds pagination information for the reviews
+                  retrieved via this API.
+                required:
+                  - count
+                  - cursor
+                  - links
+                properties:
+                  count:
+                    type: integer
+                    description: >
+                      This is the number of reviews displayed in one page of the
+                      pagination.
+
+
+                      Note that this number might be lower than the `count`
+                      number in the request. This happens when the last page is
+                      reached.
+
+
+                      For example: A total number of 105 reviews are displayed
+                      in chunks of 20 reviews per page. The sixth and last page
+                      will only have 5 reviews. The `count` property will hold
+                      the value `5`.
+                    example: 10
+                  cursor:
+                    type: object
+                    description: >-
+                      The cursor object contains information to navigate to the
+                      previous and next pages in a subsequent request.
+                    required:
+                      - before
+                      - after
+                    properties:
+                      before:
+                        type: string
+                        description: >-
+                          This is a review ID to retrieve the previous page in
+                          the pagination.
+                        example: rev-xxxxxxxa-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                      after:
+                        type: string
+                        description: >-
+                          This is a review ID to retrieve the next page in the
+                          pagination.
+                        example: rev-xxxxxxxb-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                  links:
+                    description: >
+                      Links to the previous and next pages in the pagination.
+
+
+                      Note that the links contain the exact filter parameters
+                      that were used in the request (`rating`,
+                      `submittedBefore`, `submittedAfter`).
+
+                      This makes sure that the pagination is always relative to
+                      the same filter in subsequent requests.
+
+                      If developers build URLs themselves using `after`,
+                      `before`, and the matching information inside the `cursor`
+                      object, they may need to ensure to recreate the same
+                      filter as well.
+                    type: object
+                    required:
+                      - previous
+                      - next
+                    properties:
+                      previous:
+                        type: string
+                        description: The link to the previous page in the pagination.
+                        example: >-
+                          https://p.ins.etrusted.services/reviews?count=10&before=rev-xxxxxxxa-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                      next:
+                        type: string
+                        description: The link to the next page in the pagination.
+                        example: >-
+                          https://p.ins.etrusted.services/reviews?count=10&after=rev-xxxxxxxb-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+              items:
+                type: array
+                description: |
+                  This is the list of review objects.
+
+                  Each `item` object represents a single retrieved review.
+                items:
+                  description: A single retrieved review
+                  type: object
+                  required:
+                    - _object
+                    - id
+                    - accountRef
+                    - channelRef
+                    - rating
+                    - title
+                    - comment
+                    - createdAt
+                    - updatedAt
+                    - submittedAt
+                    - state
+                    - type
+                    - questionnaire
+                  properties:
+                    _object:
+                      type: string
+                      description: The type of this review.
+                      example: CustomerReview
+                    id:
+                      type: string
+                      description: A unique identifier for this review.
+                      example: rev-xxxxxxx0-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                    accountRef:
+                      type: string
+                      description: A reference to the account the review belongs to.
+                      example: acc-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                    channelRef:
+                      type: string
+                      description: >-
+                        A reference to the channel the review was written for.
+                        written
+                      example: chl-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                    rating:
+                      type: integer
+                      description: |
+                        The rating of this review.
+
+                        Values can be: `1`, `2`, `3`, `4`, `5`.
+                      example: 5
+                    title:
+                      type: string
+                      description: A title headline for this review.
+                      example: Great experience
+                    comment:
+                      type: string
+                      description: The review text for this review.
+                      example: Everything went well. Very helpful staff!
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: >-
+                        The date and time when the review was stored initially,
+                        in the ISO 8601 and RFC3339 compliant format
+                        `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+                      example: '2018-02-01T17:09:41.790Z'
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: >-
+                        The date and time when the review was last modified, in
+                        the ISO 8601 and RFC3339 compliant format
+                        `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+                      example: '2018-02-01T17:09:41.790Z'
+                    submittedAt:
+                      type: string
+                      format: date-time
+                      description: >-
+                        The date and time when the review was submitted by the
+                        reviewer, in the ISO 8601 and RFC3339 compliant format
+                        `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+                      example: '2018-02-01T17:09:41.790Z'
+                    state:
+                      type: string
+                      description: >-
+                        The state of the review when the API request was
+                        processed.
+                      enum:
+                        - DRAFT
+                        - SUBMITTED
+                        - APPROVED
+                        - REPORTED
+                        - REJECTED
+                      example: DRAFT
+                    type:
+                      type: string
+                      description: >
+                        The review type.
+
+
+                        A service review is a review for a channel as a whole,
+                        e.g. a shop or a store, while a product review is tied
+                        to a single product.
+                      enum:
+                        - SERVICE_REVIEW
+                        - PRODUCT_REVIEW
+                      example: SERVICE_REVIEW
+                    reply:
+                      type: object
+                      description: >-
+                        The reply to the review by the owner of the channel. See
+                        The reply object for more information.
+                      required:
+                        - createdAt
+                        - updatedAt
+                        - comment
+                      properties:
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: >-
+                            The date and time when the reply was stored
+                            initially, in the ISO 8601 and RFC3339 compliant
+                            format `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+                          example: '2018-02-01T17:10:42.733Z'
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: >-
+                            The date and time when the reply was last updated,
+                            in the ISO 8601 and RFC3339 compliant format
+                            `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+                          example: '2018-02-01T17:11:33.121Z'
+                        comment:
+                          type: string
+                          description: The text message of the reply.
+                          example: We appreciate your feedback.
+                    inviteRef:
+                      type: string
+                      description: A reference to the invite which lead to this review.
+                      example: inv-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                    customer:
+                      type: object
+                      description: >-
+                        This object holds information about the customer who
+                        wrote the review.
+                      properties:
+                        fullName:
+                          type: string
+                          description: The full name of the customer.
+                          example: John Doe
+                        email:
+                          type: string
+                          description: An email address of the customer.
+                          example: john.doe@example.com
+                        mobile:
+                          type: string
+                          description: A mobile phone number of the customer.
+                          example: '+123456789'
+                    transaction:
+                      type: object
+                      description: The transaction associated with the review.
+                      required:
+                        - reference
+                      properties:
+                        reference:
+                          type: string
+                          description: 'The transaction reference, e.g. `ORDER-12345`.'
+                          example: ORDER-12792
+                        date:
+                          type: string
+                          format: date-time
+                          description: >-
+                            The date and time when the transaction took place,
+                            in the ISO 8601 and RFC3339 compliant format
+                            `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+                          example: '2018-01-04T12:09:50.722Z'
+                    event:
+                      type: object
+                      description: >-
+                        The business event associated with the transaction, e.g.
+                        "checkout".
+                      required:
+                        - id
+                        - type
+                      properties:
+                        id:
+                          type: string
+                          description: The unique identifier of the event.
+                          example: evt-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                        type:
+                          type: string
+                          description: 'The event type, e.g. "checkout".'
+                          example: checkout
+                    metadata:
+                      type: object
+                      description: >-
+                        The `metadata` object is a collection of user-defined
+                        data added to the review.
+                      example:
+                        customParam1: customVal1
+                        customParam2: customVal2
+                    surveyData:
+                      type: object
+                      description: >-
+                        The `surveyData` object holds custom response data from
+                        additional questions.
+                      example:
+                        responseParam1: responseVal1
+                        responseParam2: responseVal2
+                    questionnaire:
+                      type: object
+                      description: >-
+                        The questionnaire used to collect the review. See The
+                        questionnaire object for more information.
+                      required:
+                        - id
+                        - locale
+                        - templateRef
+                      properties:
+                        id:
+                          type: string
+                          description: The unique identifier of the questionnaire.
+                          example: qre-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+                        locale:
+                          type: string
+                          description: The locale of the questionnaire
+                          example: de_DE
+                        templateRef:
+                          type: string
+                          description: >-
+                            A reference to the template used for generating the
+                            questionnaire.
+                          example: qrt-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+        '401': {}
+        '403': {}
+        '404': {}
+  /questionnaire-links:
+    post:
+      summary: Obtain a transactional link
+      tags:
+        - Questionnaire Link
+      security:
+        - OAUTH2: []
+      description: >-
+        Each questionnaire link points to a specific rendered questionnaire. The
+        link will expire after a set amount of time.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: token
+          schema:
+            description: >-
+              The request parameters for generating a transactional
+              questionnaire link.
+            type: object
+            required:
+              - customer
+              - channel
+              - transaction
+              - questionnaireTemplate
+              - system
+              - systemVersion
+            properties:
+              type:
+                type: string
+                description: >
+                  The type parameter defines the transactional event type.
+
+                  This parameter is useful to connect a feedback with a specific
+                  transaction type (e.g. sales, after-sales, checkout, etc.).
+
+
+                  By default the type is `link_generation`.
+                example: sales
+              questionnaireTemplate:
+                type: object
+                description: >-
+                  The `questionnaireTemplate` property identifies the
+                  questionnaire template used to render the actual
+                  questionnaire.
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: >-
+                      The `id` property contains the *eTrusted Reviews* ID of
+                      the questionnaire template.
+                    example: sales
+              system:
+                description: >
+                  The `system` property identifies the system that issue the
+                  questionnaire link API call (e.g. “salesforce”, “sap”, etc.).
+                type: string
+                example: customer_system_name
+              systemVersion:
+                description: >
+                  The `systemVersion` property identifies the version of the
+                  source system (e.g. “1.0”).
+
+                  This offers organisations the option to use different versions
+                  of the same integration without putting this information into
+                  the system name.
+                type: string
+                example: '1.0'
+              customer:
+                type: object
+                description: >-
+                  The customer object includes all data of the customer who is
+                  invited to leave a review.
+                required:
+                  - email
+                properties:
+                  firstName:
+                    type: string
+                    description: >-
+                      First name of the customer who is invited to leave a
+                      review (e.g. `John`).
+                    example: John
+                  lastName:
+                    type: string
+                    description: >-
+                      Last name of the customer who is invited to leave a review
+                      (e.g. `Doe`).
+                    example: Doe
+                  email:
+                    type: string
+                    description: >-
+                      Email address of the customer who is invited to leave a
+                      review (e.g. `john.doe@example.com`). This must be a valid
+                      email address.
+                    example: john.doe@example.com
+                  mobile:
+                    type: string
+                    description: >-
+                      Mobile telephone number of the customer who is invited to
+                      leave a review. The mobile number must have international
+                      format including `+` and country code. (e.g.
+                      `+49123456789`).
+                    example: '+49123456789'
+                  address:
+                    type: string
+                    description: >-
+                      Address of the customer who is invited to leave a review
+                      (e.g. `Anystreet 17, Anycity, Anystate 12345`).
+                    example: 'Anystr. 17, 12345'
+              channel:
+                type: object
+                description: >-
+                  A company can interact with their customers through different
+                  channels (e.g. online, offline, app, etc.). Those channels can
+                  be mapped in *eTrusted Reviews* under the account. The channel
+                  object contains the information about the channel associated
+                  with the review.
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: >-
+                      The property `id` is the unique identifier of the channel
+                      associated with the review. Organisations can choose to
+                      use the *eTrusted Reviews* ID of the channel or an ID of
+                      any external system (e.g. `CH-123456`).
+                    example: example_unique_identifier
+                  type:
+                    type: string
+                    description: >
+                      `etrusted`: if the organisation chooses to use the
+                      eTrusted Reviews ID.
+
+                      `user_defined`: if the organisation chooses to use an ID
+                      of an external system.
+                    example: user_defined
+                    default: etrusted
+                    enum:
+                      - user_defined
+                      - etrusted
+              transaction:
+                type: object
+                description: >-
+                  The transaction object defines the transaction for which the
+                  customer shall write a review.
+                required:
+                  - reference
+                properties:
+                  reference:
+                    type: string
+                    description: >-
+                      The reference property can contain any reference used by
+                      organisations to identify the transaction. This string
+                      must be unique (the order or invoice number, e.g.
+                      `order-12345`).
+                    example: order-12345
+                  date:
+                    type: string
+                    format: date-time
+                    example: '2017-01-01T13:30:15.000Z'
+                    description: >-
+                      The date reference specifies the date at which the event
+                      to be reviewed took place. It is a timestamp in the ISO
+                      8601 and RFC3339 compliant format
+                      `yyyy-MM-dd’T’HH:mm:ss.SSSZ`.
+              metadata:
+                type: object
+                description: >
+                  This object can be used to add information (apart from that
+                  contained in the *eTrusted Reviews* standard) about the
+                  customer, event or anything else, e.g. for analysis purposes.
+                example:
+                  metaKey1: metaValue1
+                  metaKey2: metaValue2
+      responses:
+        '200':
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: >-
+                  The property `id` identifies the actual questionnaire which
+                  was rendered (e.g.
+                  `qre-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx`).
+                example: qre-xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx
+              link:
+                type: string
+                description: >
+                  This is a link to the questionnaire which can be provided to
+                  the customer via the channel the organisation chooses (e.g.,
+                  SMS, email, etc.).
+
+                  The link is shortened automatically so that it can also be
+                  used for channels with space limitations (e.g. SMS).
+                example: 'https://etru.st/imo2h79nl'
+              token:
+                type: string
+                description: >
+                  The `questionnaireToken` is the jwt token of the questionnaire
+                  which was rendered.
+
+                  *eTrusted* uses the compact serialisation format as defined in
+                  JSON Web Signature (JWS) standard rfc7515, like
+                  "head.payload.signature".
+                example: >-
+                  eyJraWQiOiIvdG1wbHMvand0X3B1YmxpY19rZXkvZDRhMmQ2YjYtNzRjNS00NjZlLWI3M
+                  WQtNTQ1NTk4OGY0YjliIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJxdWVzdGlvbm5haXJ
+                  lUmVmIjoicXJlLTdjMGJkNzM4LTM3NWItNDk4Ni05N2E2LTlhZjg2OThlMjRmMiIsImlzcyI6I
+                  mh0dHBzOi8vd3d3LmV0cnVzdGVkLmNvbSIsImV2ZW50UmVmIjoiZXZ0LTBjYTk1MTU2L
+                  WE5NDQtNDhlNC04Mjc1LTdlZGViMTY2MGUyYyIsInF1ZXN0aW9ubmFpcmVMb2NhbGUi
+                  OiJlbl9HQiIsInN5c3RlbVZlcnNpb24iOiIxLjAuMCIsImF1ZCI6Imh0dHBzOi8vZmVlZGJhY2su
+                  ZXRydXN0ZWQuY29tIiwicXVlc3Rpb25uYWlyZVRlbXBsYXRlUmVmIjoicXJ0LTRhNjFkN2J
+                  mLTVkYTMtNDE4Yi1hOThmLWU2MDM1MzRkOWZkNV9lbi1HQiIsInN5c3RlbSI6ImN1c3R
+                  vbWVyX3N5c3RlbV9uYW1lIiwiYXBpVmVyc2lvbiI6IjEuMS4wIiwiY29sbGVjdGlvblByb2Nlc3
+                  MiOiJDTE9TRURfRkVFREJBQ0siLCJjaGFubmVsUmVmIjoiY2hsLTRiOTQxYjEzLWJiMDEt
+                  NDBhOS1iZGZkLWE2ZjA0ZTVjYTEwZSIsImFjY291bnRSZWYiOiJhY2MtODYzYzlkOGQtM
+                  TEwOC00NTkxLTg2OGQtNWUwYWFhZDI2Y2Y0IiwiaWF0IjoxNTM2NzY5NjQ3fQ.A8EZkvj
+                  UEwFXT_U9bgVgIKfQkyxFY3K3G4YNN3tZzoc50eG1ggYsKzj-
+                  _XLnN9tpDnyQXENFz4g8yY9kUK43LLvFxOHdWOjlF0X4ZPngyd4eSgBQTYyofeI39vKzc9
+                  EPN9oajrqgog8jHMq4Y7oBa9Z2J4s21Q6N-hCp2vS128f5Wma12Wa9YExPV1Tf21P-
+                  v5MMjYiqNan_oxX_3ENjJ07kzxP8SGN5QSbVUgZGmw6y213VDCGpopzm_cTkf67YKpW
+                  n4wPNOeo_LDX5P6T85kyZC-F6g9R-
+                  uEFUtY_wBv1FrIBokfVfVQWJnbIajUjM21Z3_W5Am3JUyHxPcxnSMg
+        '401': {}
+        '403': {}
+        '404': {}
+securityDefinitions:
+  OAUTH2:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+      The API is protected by OAUTH2.
+
+
+      Therefore each call has two stages:
+
+
+      1. Call the authorisation server.
+          Assuming secure machine-to-machine services, call it with client ID and client secret via POST.
+          Note that this may raise security issues when the services are not secure.
+      2. The authorisation server checks the credentials and returns an access
+      token. Developers can use the access token for the main API call.
+
+
+      ![Authentication flow diagram](img/authentication.png)
+
+
+      ### Authentication endpoint
+
+
+      The endpoint for this API is:
+
+
+      ```
+
+      https://login.etrusted.com/oauth/token
+
+      ```
+
+      *Authentication endpoint*
+
+
+      ### Authentication header
+
+
+      The header must contain the following information:
+
+
+      ```
+
+      Content-Type = application/x-www-form-urlencoded
+
+      ```
+
+      *OAUTH Authentication Call: Header*
+
+
+      ### Authentication body
+
+
+      For a machine-to-machine application, provide the following information in
+      the body for authentication call:
+
+
+      * client_id
+
+      * client_secret
+
+      * grant_type
+
+      * audience
+
+
+
+      ```
+
+      client_id = tGQLutuc774hjF0U0ogMqGXOvtrXOSTg
+
+      client_secret =
+      cQDRXRj7_wUW-I9spjEEfZ5IUbE3dhfjsQyEygflgKqzyOmk1P7-oljTLJFZ6zIb
+
+      grant_type =  client_credentials
+
+      audience =  https://api.etrusted.com
+
+      ```
+
+      *OAUTH Authentication Call: Body Example*
+
+
+      ### Authentication response
+
+
+      The response of the authorisation call contains an access token.
+
+
+      ``` json
+
+      {
+          "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJqVTBOVEZHUVRNek9URXdORFF6UWpWQ01UbEVNakkxTnpBelFrUTFNalZCTWtJNU5rWkJOZyJ9.azFodHRwczovL2V0cnVzdGVkLmNvbSI6eyJhY2NvdW50UmVmIjoiYWNjLTg2M2M5ZDhkLTExMDgtNDU5MS04NjhkLTVlMGFhYWQyNmNmNCIsInJvbGUiOiJvd25lciIsInBlcm1pc3Npb25zIjpbeyJyZXNvdXJjZVNldElkIjoidXJuOmV0cnVzdGVkOioifV19LCJpc3MiOiJodHRwczovL2xvZ2luLmV0cnVzdGVkLmNvbS8iLCJzdWIiOiJUT3VEMTJlNTBrWWVJMjRrcHR4UnZtbUtIVWpsWXB2TkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hcGkuZXRydXN0ZWQuY29tIiwiaWF0IjoxNTM2OTM5NDYyLCJleHAiOjE1MzcwMjU0NjIsImF6cCI6IlRPdUQxMmU1MGtZZUkyNGtwdHhSdm1tS0hVamxZcHZOIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.sRPAq-ungXNbembi7fe25R21-vuVzdHnr6vtAerS8p2rdhwaXXkQq5WSurlpLbaaRKoCaxFENC2cbs2GnyEJlHE3izmpkyCat1Eb4iqtr80MaI7BMEw_B-0kjMYFjVoNblyXgCUxYAxqjNz3Gnxuu6lz1hYrw_Ck23WrwMnEI1vT-k6ocgRihmQek1DXirn2ndtoNeY9HYgPiXMOmx5sRcIJiNq_RD-BiwCDkIIy4F-kiFYBHQDhnENVNaUB1hMfoWW3OpdubaGWJJagvvS8jlShD8fbo-UQ0FhZOlizlthR-oyRZEZLVuooUR8jiOCCCnHw5LAyyJ8m09MskyWIqA",
+          "expires_in": 86000,
+          "token_type": "Bearer"
+      }
+
+      ```
+
+      *OAUTH Authentication Call: Response Example*
+
+
+      ### API call headers
+
+
+      You need to use the `access_token` within subsequent API calls.
+
+      The `access_token` is valid for a limited time specified in the response
+      of the authentication call.
+
+
+      ```
+
+      Authorization = Bearer <<access_token>>
+
+      Content-Type = application/json
+
+      ```
+
+      *OAUTH Authentication Call: Header*
+
+
+      ```
+
+      Authorization = Bearer
+      eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJqVTBOVEZHUVRNek9URXdORFF6UWpWQ01UbEVNakkxTnpBelFrUTFNalZCTWtJNU5rWkJOZyJ9.azFodHRwczovL2V0cnVzdGVkLmNvbSI6eyJhY2NvdW50UmVmIjoiYWNjLTg2M2M5ZDhkLTExMDgtNDU5MS04NjhkLTVlMGFhYWQyNmNmNCIsInJvbGUiOiJvd25lciIsInBlcm1pc3Npb25zIjpbeyJyZXNvdXJjZVNldElkIjoidXJuOmV0cnVzdGVkOioifV19LCJpc3MiOiJodHRwczovL2xvZ2luLmV0cnVzdGVkLmNvbS8iLCJzdWIiOiJUT3VEMTJlNTBrWWVJMjRrcHR4UnZtbUtIVWpsWXB2TkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hcGkuZXRydXN0ZWQuY29tIiwiaWF0IjoxNTM2OTM5NDYyLCJleHAiOjE1MzcwMjU0NjIsImF6cCI6IlRPdUQxMmU1MGtZZUkyNGtwdHhSdm1tS0hVamxZcHZOIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.sRPAq-ungXNbembi7fe25R21-vuVzdHnr6vtAerS8p2rdhwaXXkQq5WSurlpLbaaRKoCaxFENC2cbs2GnyEJlHE3izmpkyCat1Eb4iqtr80MaI7BMEw_B-0kjMYFjVoNblyXgCUxYAxqjNz3Gnxuu6lz1hYrw_Ck23WrwMnEI1vT-k6ocgRihmQek1DXirn2ndtoNeY9HYgPiXMOmx5sRcIJiNq_RD-BiwCDkIIy4F-kiFYBHQDhnENVNaUB1hMfoWW3OpdubaGWJJagvvS8jlShD8fbo-UQ0FhZOlizlthR-oyRZEZLVuooUR8jiOCCCnHw5LAyyJ8m09MskyWIqA
+
+      Content-Type = application/json
+
+      ```
+
+      *OAUTH Authentication Call: Header Example*
